@@ -1,4 +1,4 @@
-# Tinder Java Api
+# Tinder Java Api [![Build Status](https://travis-ci.org/aldoborrero/tinder-java-api.svg)](https://travis-ci.org/aldoborrero/tinder-java-api)
 
 A Java implementation using Retrofit + OkHttp
 
