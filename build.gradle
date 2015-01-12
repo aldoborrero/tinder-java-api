@@ -1,0 +1,23 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+    }
+}
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'idea'
+
+idea {
+  project {
+    jdkName = '1.7'
+    languageLevel = '1.7'
+    vcs = 'Git'
+  }
+}
