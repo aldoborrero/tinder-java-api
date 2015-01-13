@@ -16,5 +16,35 @@
 
 package com.aldoborrero.tinder.api.entities;
 
+import java.util.List;
+
 public class Photo {
+
+    private String url;
+    private List<ProcessedFile> processedFiles;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public List<ProcessedFile> getProcessedFiles() {
+        return processedFiles;
+    }
+
+    public void setProcessedFiles(List<ProcessedFile> processedFiles) {
+        this.processedFiles = processedFiles;
+    }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "url='" + url + '\'' +
+                ", processedFiles=" + processedFiles +
+                '}';
+    }
+    
 }

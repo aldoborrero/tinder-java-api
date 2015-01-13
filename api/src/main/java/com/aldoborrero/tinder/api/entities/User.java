@@ -18,49 +18,50 @@ package com.aldoborrero.tinder.api.entities;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class User {
 
     private String _id;
-    private String activeTime;
-    private String createDate;
+    private Date activeTime;
+    private Date createDate;
     private int ageFilterMax;
     private int ageFilterMin;
     private String apiToken;
     private String bio;
-    private String birthDate;
+    private Date birthDate;
     private int distanceFilter;
     private String fullName;
     private String name;
     private Gender gender;
     private List<Photo> photos;
     private List<Purchase> purchases;
-    private String pingTime;
+    private Date pingTime;
     private boolean discoverable;
     private GenderFilter genderFilter;
 
-    public String get_id() {
+    public String getId() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void setId(String _id) {
         this._id = _id;
     }
 
-    public String getActiveTime() {
+    public Date getActiveTime() {
         return activeTime;
     }
 
-    public void setActiveTime(String activeTime) {
+    public void setActiveTime(Date activeTime) {
         this.activeTime = activeTime;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
@@ -96,11 +97,11 @@ public class User {
         this.bio = bio;
     }
 
-    public String getBirthDate() {
+    public Date getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -152,11 +153,11 @@ public class User {
         this.purchases = purchases;
     }
 
-    public String getPingTime() {
+    public Date getPingTime() {
         return pingTime;
     }
 
-    public void setPingTime(String pingTime) {
+    public void setPingTime(Date pingTime) {
         this.pingTime = pingTime;
     }
 
