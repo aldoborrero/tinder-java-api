@@ -7,8 +7,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
     compile 'com.squareup.retrofit:retrofit-mock:1.8.0'
-
+    compile 'org.jetbrains:annotations:7.0.2'
+    
     testCompile 'junit:junit:4.12'
     testCompile 'com.github.javafaker:javafaker:0.5'
     testCompile 'org.easytesting:fest:1.0.16'
+    testCompile 'com.squareup.okhttp:mockwebserver:2.2.0'
 }
