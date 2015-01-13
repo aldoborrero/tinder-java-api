@@ -14,17 +14,19 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.utils;
+package com.aldoborrero.tinder.api.gson;
 
-import com.aldoborrero.tinder.api.interceptors.AuthTokenInterceptor;
-import com.squareup.okhttp.OkHttpClient;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-public class TinderOkHttpFactory {
+public class TinderGsonFactory {
 
-    public static OkHttpClient create() {
-        OkHttpClient client = new OkHttpClient();
-        client.networkInterceptors().add(new AuthTokenInterceptor());
-        return client;
+    public static Gson create() {
+        return new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .setPrettyPrinting()
+                .create();
     }
 
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.services;
+package com.aldoborrero.tinder.mock.services;
 
 import com.aldoborrero.tinder.api.entities.Auth;
 import com.aldoborrero.tinder.api.entities.AuthData;
@@ -27,12 +27,13 @@ import com.aldoborrero.tinder.api.entities.PopularLocations;
 import com.aldoborrero.tinder.api.entities.Recommendations;
 import com.aldoborrero.tinder.api.entities.Updates;
 import com.aldoborrero.tinder.api.entities.User;
+import com.aldoborrero.tinder.api.services.ObservableTinderService;
 
 import retrofit.http.Body;
 import retrofit.http.Path;
 import rx.Observable;
 
-public class MockTinderService implements ObservableTinderService {
+public class MockObservableTinderService implements ObservableTinderService {
 
     @Override
     public Observable<Auth> auth(@Body AuthData authData) {
