@@ -1,0 +1,377 @@
+{
+    "status": 200,
+    "results": [
+        {
+            "lat": 34.0522342,
+            "lon": -118.2436849,
+            "locality": {
+                "short_name": "Los Angeles",
+                "long_name": "Los Angeles"
+            },
+            "administrative_area_level_1": {
+                "short_name": "CA",
+                "long_name": "California"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Los Angeles County",
+                "long_name": "Los Angeles County"
+            },
+            "country": {
+                "short_name": "US",
+                "long_name": "United States"
+            }
+        },
+        {
+            "lat": 51.5073509,
+            "lon": -0.1277583,
+            "locality": {
+                "short_name": "London",
+                "long_name": "London"
+            },
+            "country": {
+                "short_name": "GB",
+                "long_name": "United Kingdom"
+            }
+        },
+        {
+            "lat": -37.814107,
+            "lon": 144.96328,
+            "locality": {
+                "short_name": "Melbourne",
+                "long_name": "Melbourne"
+            },
+            "administrative_area_level_1": {
+                "short_name": "VIC",
+                "long_name": "Victoria"
+            },
+            "country": {
+                "short_name": "AU",
+                "long_name": "Australia"
+            }
+        },
+        {
+            "lat": 40.7127837,
+            "lon": -74.0059413,
+            "locality": {
+                "short_name": "New York",
+                "long_name": "New York"
+            },
+            "administrative_area_level_1": {
+                "short_name": "NY",
+                "long_name": "New York"
+            },
+            "administrative_area_level_2": {
+                "short_name": "New York County",
+                "long_name": "New York County"
+            },
+            "country": {
+                "short_name": "US",
+                "long_name": "United States"
+            }
+        },
+        {
+            "lat": 52.3702157,
+            "lon": 4.895167900000001,
+            "locality": {
+                "short_name": "Amsterdam",
+                "long_name": "Amsterdam"
+            },
+            "administrative_area_level_1": {
+                "short_name": "NH",
+                "long_name": "North Holland"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Government of Amsterdam",
+                "long_name": "Government of Amsterdam"
+            },
+            "country": {
+                "short_name": "NL",
+                "long_name": "The Netherlands"
+            }
+        },
+        {
+            "lat": -33.8674869,
+            "lon": 151.2069902,
+            "locality": {
+                "short_name": "Sydney",
+                "long_name": "Sydney"
+            },
+            "administrative_area_level_1": {
+                "short_name": "NSW",
+                "long_name": "New South Wales"
+            },
+            "country": {
+                "short_name": "AU",
+                "long_name": "Australia"
+            }
+        },
+        {
+            "lat": 32.0852999,
+            "lon": 34.78176759999999,
+            "locality": {
+                "short_name": "ת\"א",
+                "long_name": "Tel Aviv-Yafo"
+            },
+            "country": {
+                "short_name": "IL",
+                "long_name": "Israel"
+            }
+        },
+        {
+            "lat": 25.0476643,
+            "lon": 55.1817407,
+            "locality": {
+                "short_name": "Dubai",
+                "long_name": "Dubai"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Dubai",
+                "long_name": "Dubai"
+            },
+            "country": {
+                "short_name": "AE",
+                "long_name": "United Arab Emirates"
+            }
+        },
+        {
+            "lat": 48.856614,
+            "lon": 2.3522219,
+            "locality": {
+                "short_name": "Paris",
+                "long_name": "Paris"
+            },
+            "administrative_area_level_1": {
+                "short_name": "IDF",
+                "long_name": "Île-de-France"
+            },
+            "administrative_area_level_2": {
+                "short_name": "75",
+                "long_name": "Paris"
+            },
+            "country": {
+                "short_name": "FR",
+                "long_name": "France"
+            }
+        },
+        {
+            "lat": -22.9082998,
+            "lon": -43.1970773,
+            "locality": {
+                "short_name": "Rio de Janeiro",
+                "long_name": "Rio de Janeiro"
+            },
+            "administrative_area_level_1": {
+                "short_name": "RJ",
+                "long_name": "State of Rio de Janeiro"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Rio de Janeiro",
+                "long_name": "Rio de Janeiro"
+            },
+            "country": {
+                "short_name": "BR",
+                "long_name": "Brazil"
+            }
+        },
+        {
+            "lat": 41.3850639,
+            "lon": 2.1734035,
+            "locality": {
+                "short_name": "Barcelona",
+                "long_name": "Barcelona"
+            },
+            "administrative_area_level_1": {
+                "short_name": "CT",
+                "long_name": "Catalonia"
+            },
+            "administrative_area_level_2": {
+                "short_name": "B",
+                "long_name": "Barcelona"
+            },
+            "country": {
+                "short_name": "ES",
+                "long_name": "Spain"
+            }
+        },
+        {
+            "lat": 41.8723889,
+            "lon": 12.4801802,
+            "locality": {
+                "short_name": "Rome",
+                "long_name": "Rome"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Lazio",
+                "long_name": "Lazio"
+            },
+            "administrative_area_level_2": {
+                "short_name": "RM",
+                "long_name": "Rome"
+            },
+            "country": {
+                "short_name": "IT",
+                "long_name": "Italy"
+            }
+        },
+        {
+            "lat": -36.8484597,
+            "lon": 174.7633315,
+            "locality": {
+                "short_name": "Auckland",
+                "long_name": "Auckland"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Auckland",
+                "long_name": "Auckland"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Auckland",
+                "long_name": "Auckland"
+            },
+            "country": {
+                "short_name": "NZ",
+                "long_name": "New Zealand"
+            }
+        },
+        {
+            "lat": -34.6037232,
+            "lon": -58.3815931,
+            "locality": {
+                "short_name": "CF",
+                "long_name": "Buenos Aires"
+            },
+            "country": {
+                "short_name": "AR",
+                "long_name": "Argentina"
+            }
+        },
+        {
+            "lat": -33.9248685,
+            "lon": 18.4240553,
+            "locality": {
+                "short_name": "Cape Town",
+                "long_name": "Cape Town"
+            },
+            "administrative_area_level_1": {
+                "short_name": "WC",
+                "long_name": "Western Cape"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Cape Town",
+                "long_name": "Cape Town"
+            },
+            "country": {
+                "short_name": "ZA",
+                "long_name": "South Africa"
+            }
+        },
+        {
+            "lat": 52.52000659999999,
+            "lon": 13.404954,
+            "locality": {
+                "short_name": "Berlin",
+                "long_name": "Berlin"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Berlin",
+                "long_name": "Berlin"
+            },
+            "country": {
+                "short_name": "DE",
+                "long_name": "Germany"
+            }
+        },
+        {
+            "lat": 53.3498053,
+            "lon": -6.2603097,
+            "locality": {
+                "short_name": "Dublin",
+                "long_name": "Dublin"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Dublin",
+                "long_name": "Dublin"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Dublin City",
+                "long_name": "Dublin City"
+            },
+            "country": {
+                "short_name": "IE",
+                "long_name": "Ireland"
+            }
+        },
+        {
+            "lat": 59.32932349999999,
+            "lon": 18.0685808,
+            "locality": {
+                "short_name": "Stockholm",
+                "long_name": "Stockholm"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Stockholm County",
+                "long_name": "Stockholm County"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Stockholm",
+                "long_name": "Stockholm"
+            },
+            "country": {
+                "short_name": "SE",
+                "long_name": "Sweden"
+            }
+        },
+        {
+            "lat": 55.6760968,
+            "lon": 12.5683371,
+            "locality": {
+                "short_name": "kbh",
+                "long_name": "Copenhagen"
+            },
+            "administrative_area_level_1": {
+                "short_name": "Capital Region of Denmark",
+                "long_name": "Capital Region of Denmark"
+            },
+            "administrative_area_level_2": {
+                "short_name": "København",
+                "long_name": "København"
+            },
+            "country": {
+                "short_name": "DK",
+                "long_name": "Denmark"
+            }
+        },
+        {
+            "lat": 25.7890972,
+            "lon": -80.2040435,
+            "locality": {
+                "short_name": "Miami",
+                "long_name": "Miami"
+            },
+            "administrative_area_level_1": {
+                "short_name": "FL",
+                "long_name": "Florida"
+            },
+            "administrative_area_level_2": {
+                "short_name": "Miami-Dade County",
+                "long_name": "Miami-Dade County"
+            },
+            "country": {
+                "short_name": "US",
+                "long_name": "United States"
+            }
+        },
+        {
+            "lat": 41.00527,
+            "lon": 28.97696,
+            "locality": {
+                "short_name": "İstanbul",
+                "long_name": "İstanbul"
+            },
+            "country": {
+                "short_name": "TR",
+                "long_name": "Turkey"
+            }
+        }
+    ]
+}
