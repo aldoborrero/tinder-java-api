@@ -20,19 +20,52 @@ import com.aldoborrero.tinder.api.Configuration;
 import com.aldoborrero.tinder.api.Tinder;
 import com.aldoborrero.tinder.api.entities.Auth;
 import com.aldoborrero.tinder.api.entities.AuthData;
+import com.aldoborrero.tinder.api.mock.MockResponsesFactory;
+import com.squareup.okhttp.mockwebserver.MockWebServer;
 
+import org.jetbrains.annotations.NotNull;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+
+import retrofit.Endpoint;
+import retrofit.Endpoints;
 
 import static org.junit.Assert.assertNotNull;
 
 public class SyncTinderServiceTest {
 
-    private final SyncTinderService tinderService = new Tinder(Tinder.EndpointType.PRODUCTION, Configuration.ANDROID).createSyncTinderService();
+    private MockWebServer webServer;
+    private SyncTinderService tinderService;
 
+    @Before
+    public void setUp() throws IOException {
+        webServer = new MockWebServer();
+        webServer.play();
+        
+        tinderService = Tinder.create(new Configuration.SimpleConfiguration() {
+            @NotNull
+            @Override
+            public Endpoint getEndPoint() {
+                return Endpoints.newFixedEndpoint(webServer.getUrl("/").toString());
+            }
+        }).createSyncTinderService();
+    }
+    
     @Test
     public void shouldGetAuthInformationWhenLogging() {
+        webServer.enqueue(MockResponsesFactory.createAuthResponse());
+        
         Auth auth = tinderService.auth(new AuthData("token", "en"));
         assertNotNull(auth);
+        assertNotNull(auth.getToken());
+        assertNotNull(auth.getGlobals());
+        assertNotNull(auth.getUser());
+        assertNotNull(auth.getVersions());
+        
+        System.out.println("Current User: " + auth.getUser().toString());
     }
+
 
 }

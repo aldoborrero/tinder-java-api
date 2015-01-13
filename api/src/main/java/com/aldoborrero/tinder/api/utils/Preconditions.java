@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2007 The Guava Authors
  * Copyright 2015 Aldo Borrero <aldo@aldoborrero.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,21 +15,18 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.gson;
+package com.aldoborrero.tinder.api.utils;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.jetbrains.annotations.Nullable;
 
-public class TinderGsonFactory {
+public class Preconditions {
 
-    public static Gson create() {
-        return new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .setPrettyPrinting()
-                .registerTypeAdapter(IsoDateConverter.TYPE, new IsoDateConverter())
-                .registerTypeAdapter(TokenConverter.TYPE, new TokenConverter())
-                .create();
+    // Method ripped from Guava Preconditions class! >_<
+    public static <T> T checkNotNull(T reference, @Nullable Object errorMessage) {
+        if (reference == null) {
+            throw new NullPointerException(String.valueOf(errorMessage));
+        }
+        return reference;
     }
-
+    
 }
