@@ -1,4 +1,6 @@
-# TinderJs for Android [![Build Status](https://travis-ci.org/aldoborrero/tinder-java-api.svg)](https://travis-ci.org/aldoborrero/tinder-java-api)
+# Tinder Java API [![Build Status](https://travis-ci.org/aldoborrero/tinder-java-api.svg)](https://travis-ci.org/aldoborrero/tinder-java-api)
+
+![](assets/tinder-flame.png)
 
 A Java wrapper for Tinder API implemented using [Retrofit](http://square.github.io/retrofit) + [OkHttp](http://square.github.io/okhttp/).
 
@@ -28,7 +30,7 @@ or your Maven project:
 
 ## Contributions
 
-Feel free to contribute to this project if you feel something could be improved or fixed. Only thing to notice is that commits to `develop` branch!
+Feel free to contribute to this project if you feel something could be improved or fixed. Only thing to notice is that commits should go to `develop` branch as master is for stable builds!
 
 ## <a name="about"></a> About
 
