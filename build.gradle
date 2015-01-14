@@ -3,6 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        classpath "net.saliman:gradle-cobertura-plugin:2.2.5"
     }
 }
 
@@ -18,9 +19,19 @@ allprojects {
 apply plugin: 'idea'
 
 idea {
-  project {
-    jdkName = '1.7'
-    languageLevel = '1.7'
-    vcs = 'Git'
-  }
+    project {
+        jdkName = '1.7'
+        languageLevel = '1.7'
+        vcs = 'Git'
+    }
 }
+
+apply plugin: 'net.saliman.cobertura'
+
+cobertura {
+    rootProject.subprojects.each {
+        coverageDirs << file("${it.name}/build/classes/main")
+    }
+}
+
+apply plugin: 'build-dashboard'

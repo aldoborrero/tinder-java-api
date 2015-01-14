@@ -1,4 +1,9 @@
 apply plugin: 'java'
+apply plugin: 'pmd'
+
+cobertura {
+    coverageExcludes = ['.*com.aldoborrero.tinder.api.entities.*']
+}
 
 dependencies {
     compile 'com.squareup.okhttp:okhttp:2.2.0'
@@ -8,9 +13,39 @@ dependencies {
     compile 'com.netflix.rxjava:rxjava-core:0.20.7'
     compile 'com.squareup.retrofit:retrofit-mock:1.8.0'
     compile 'org.jetbrains:annotations:7.0.2'
-    
+
     testCompile 'junit:junit:4.12'
     testCompile 'com.github.javafaker:javafaker:0.5'
     testCompile 'org.easytesting:fest:1.0.16'
     testCompile 'com.squareup.okhttp:mockwebserver:2.2.0'
 }
+
+afterEvaluate {
+    
+    task pmd(type: Pmd) {
+
+        description 'Run pmd'
+        group 'verification'
+
+        ruleSets = []
+        ruleSetFiles = files('./../config/pmd/pmd-ruleset.xml')
+        source = fileTree('src/main/java')
+
+        reports {
+            xml.enabled = false
+            html.enabled = true
+        }
+    }
+
+    //pmdTestDebug {
+    //    enabled = false
+   // }
+
+    check.dependsOn('pmd')
+}
+
+//artifacts {
+//    archives releaseSourceJar {
+//        classifier 'sources'
+//    }
+//}
