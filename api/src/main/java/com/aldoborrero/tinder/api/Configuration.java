@@ -17,16 +17,33 @@
 package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.utils.Preconditions;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import retrofit.Endpoint;
 
 import java.util.Arrays;
 import java.util.List;
 
-import retrofit.Endpoint;
-
+/** Configuration object to create instances of {@link com.aldoborrero.tinder.api.Tinder}. */
 public interface Configuration {
+
+    /**
+     * A default {@link Configuration} which mimics those defaults found in original Android client.
+     */
+    final Configuration DEFAULT = new Configuration() {
+
+        @NotNull
+        @Override
+        public Endpoint getEndPoint() {
+            return new TinderEndpoint();
+        }
+
+        @Override
+        public List<Header> getExtraHeaders() {
+            return TinderDefaultHeaders.get();
+        }
+
+    };
 
     @NotNull
     Endpoint getEndPoint();
@@ -45,7 +62,7 @@ public interface Configuration {
         String value;
     }
 
-    public static class TinderDefaultHeaders {
+    class TinderDefaultHeaders {
         private static final Header USER_AGENT_HEADER = new Header("User-Agent", "");
         private static final Header OS_VERSION_HEADER = new Header("os-version", "");
         private static final Header APP_VERSION_HEADER = new Header("app-version", "");
@@ -53,6 +70,10 @@ public interface Configuration {
 
         public static List<Header> get() {
             return Arrays.asList(USER_AGENT_HEADER, OS_VERSION_HEADER, APP_VERSION_HEADER, PLATFORM_HEADER);
+        }
+
+        private TinderDefaultHeaders() {
+            throw new AssertionError("No instances of this class are allowed!");
         }
     }
 
@@ -84,7 +105,7 @@ public interface Configuration {
 
     }
 
-    static class Validator {
+    class Validator {
 
         public static Configuration validate(Configuration configuration) {
             Preconditions.checkNotNull(configuration, "Configuration must not be null!");
@@ -97,23 +118,5 @@ public interface Configuration {
         }
 
     }
-
-    /**
-     * A default {@link Configuration} which mimics those defaults found in original Android client.
-     */
-    Configuration DEFAULT = new Configuration() {
-
-        @NotNull
-        @Override
-        public Endpoint getEndPoint() {
-            return new TinderEndpoint();
-        }
-
-        @Override
-        public List<Header> getExtraHeaders() {
-            return TinderDefaultHeaders.get();
-        }
-
-    };
 
 }

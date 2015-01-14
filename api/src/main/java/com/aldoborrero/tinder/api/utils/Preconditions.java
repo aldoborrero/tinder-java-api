@@ -28,5 +28,9 @@ public class Preconditions {
         }
         return reference;
     }
-    
+
+    private Preconditions() {
+        throw new AssertionError("No instances of this class are allowed!");
+    }
+
 }
