@@ -16,17 +16,7 @@
 
 package com.aldoborrero.tinder.mock.services;
 
-import com.aldoborrero.tinder.api.entities.Auth;
-import com.aldoborrero.tinder.api.entities.AuthData;
-import com.aldoborrero.tinder.api.entities.Like;
-import com.aldoborrero.tinder.api.entities.LikeMoment;
-import com.aldoborrero.tinder.api.entities.Moments;
-import com.aldoborrero.tinder.api.entities.Pass;
-import com.aldoborrero.tinder.api.entities.PassMoment;
-import com.aldoborrero.tinder.api.entities.PopularLocations;
-import com.aldoborrero.tinder.api.entities.Recommendations;
-import com.aldoborrero.tinder.api.entities.Updates;
-import com.aldoborrero.tinder.api.entities.User;
+import com.aldoborrero.tinder.api.entities.*;
 import com.aldoborrero.tinder.api.services.ObservableTinderService;
 
 import retrofit.http.Body;
@@ -41,7 +31,7 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<Recommendations> getUserRecommendations() {
+    public Observable<Response<User>> getUserRecommendations() {
         return null;
     }
 
@@ -76,7 +66,7 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<PopularLocations> getPopularLocations() {
+    public Observable<Response<PopularLocation>> getPopularLocations() {
         return null;
     }
 
@@ -89,5 +79,5 @@ public class MockObservableTinderService implements ObservableTinderService {
     public Observable<User> updateUserInformation() {
         return null;
     }
-
+    
 }

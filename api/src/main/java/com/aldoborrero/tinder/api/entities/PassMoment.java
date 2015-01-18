@@ -16,5 +16,5 @@
 
 package com.aldoborrero.tinder.api.entities;
 
-public class PassMoment {
+public class PassMoment implements Result {
 }

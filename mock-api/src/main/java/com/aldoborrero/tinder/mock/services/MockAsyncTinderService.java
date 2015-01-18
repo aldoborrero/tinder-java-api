@@ -1,16 +1,6 @@
 package com.aldoborrero.tinder.mock.services;
 
-import com.aldoborrero.tinder.api.entities.Auth;
-import com.aldoborrero.tinder.api.entities.AuthData;
-import com.aldoborrero.tinder.api.entities.Like;
-import com.aldoborrero.tinder.api.entities.LikeMoment;
-import com.aldoborrero.tinder.api.entities.Moments;
-import com.aldoborrero.tinder.api.entities.Pass;
-import com.aldoborrero.tinder.api.entities.PassMoment;
-import com.aldoborrero.tinder.api.entities.PopularLocations;
-import com.aldoborrero.tinder.api.entities.Recommendations;
-import com.aldoborrero.tinder.api.entities.Updates;
-import com.aldoborrero.tinder.api.entities.User;
+import com.aldoborrero.tinder.api.entities.*;
 import com.aldoborrero.tinder.api.services.AsyncTinderService;
 
 import retrofit.Callback;
@@ -18,14 +8,14 @@ import retrofit.http.Body;
 import retrofit.http.Path;
 
 public class MockAsyncTinderService implements AsyncTinderService {
-    
+
     @Override
     public void auth(@Body AuthData authData, Callback<Auth> cb) {
-        
+
     }
 
     @Override
-    public void getUserRecommendations(Callback<Recommendations> cb) {
+    public void getUserRecommendations(Callback<Response<User>> cb) {
 
     }
 
@@ -60,7 +50,7 @@ public class MockAsyncTinderService implements AsyncTinderService {
     }
 
     @Override
-    public void getPopularLocations(Callback<PopularLocations> cb) {
+    public void getPopularLocations(Callback<Response<PopularLocation>> cb) {
 
     }
 
@@ -73,5 +63,4 @@ public class MockAsyncTinderService implements AsyncTinderService {
     public void updateUserInformation(Callback<User> cb) {
 
     }
-    
 }

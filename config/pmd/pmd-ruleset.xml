@@ -14,6 +14,8 @@
         <exclude name="ConfusingTernary" />
         <exclude name="EmptyMethodInAbstractClassShouldBeAbstract" />
         <exclude name="AvoidSynchronizedAtMethodLevel" />
+        <exclude name="UncommentedEmptyConstructor" />
+        <exclude name="UnsynchronizedStaticDateFormatter" />
 
         <!-- This check breaks on double checked locking which is safe in Java 6/7 -->
         <exclude name="NonThreadSafeSingleton" />

@@ -1,11 +1,6 @@
 package com.aldoborrero.tinder.api.mock;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import okio.Buffer;
-
-public class Resources {
+public class FakeResponses {
 
     public static final String RESPONSES = "/responses/";
     public static final String AUTH = RESPONSES + "auth.json";
@@ -19,18 +14,4 @@ public class Resources {
     public static final String USER_INFORMATION = RESPONSES + "user_information.json";
     public static final String USER_RECS = RESPONSES + "user_recs.json";
 
-    static InputStream loadResource(String resource) {
-        return Resources.class.getResourceAsStream(resource);
-    }
-
-    static Buffer loadBuffer(String resource) {
-        Buffer b = new Buffer();
-        try {
-            b.readFrom(loadResource(resource));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return b;
-    }
-    
 }

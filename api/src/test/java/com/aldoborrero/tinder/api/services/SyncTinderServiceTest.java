@@ -20,7 +20,14 @@ import com.aldoborrero.tinder.api.Configuration;
 import com.aldoborrero.tinder.api.Tinder;
 import com.aldoborrero.tinder.api.entities.Auth;
 import com.aldoborrero.tinder.api.entities.AuthData;
+import com.aldoborrero.tinder.api.entities.Response;
+import com.aldoborrero.tinder.api.entities.User;
+import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
+import com.aldoborrero.tinder.api.mock.Assertions;
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory;
+import com.aldoborrero.tinder.api.mock.ResourcesLoader;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.squareup.okhttp.mockwebserver.MockWebServer;
 import org.jetbrains.annotations.NotNull;
 import org.junit.After;
@@ -31,39 +38,85 @@ import retrofit.Endpoints;
 
 import java.io.IOException;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
 
 public class SyncTinderServiceTest {
 
+    private Gson gson;
     private MockWebServer webServer;
     private SyncTinderService tinderService;
 
     @Before
-    public void setUp() throws IOException {
+    public void setUp() {
+        setUpGson();
+        setUpWebServer();
+        setUpTinderService();
+    }
+
+    private void setUpGson() {
+        gson = TinderGsonFactory.create();
+    }
+
+    private void setUpWebServer() {
         webServer = new MockWebServer();
-        webServer.play();
-        
-        tinderService = Tinder.create(new Configuration.SimpleConfiguration() {
+        try {
+            webServer.play();
+        } catch (IOException e) {
+            throw new RuntimeException("Something went wrong while creating MockWebServer! Nooooo... :'(", e);
+        }
+    }
+
+    private void setUpTinderService() {
+        tinderService = Tinder.create(new Configuration.BaseConfiguration() {
             @NotNull
             @Override
             public Endpoint getEndPoint() {
                 return Endpoints.newFixedEndpoint(webServer.getUrl("/").toString());
             }
-        }).createSyncTinderService();
+        }).createSyncService();
     }
-    
+
     @Test
-    public void shouldGetAuthInformationWhenLogging() {
+    public void shouldParseAuthInformation() {
         webServer.enqueue(MockResponsesFactory.createAuthResponse());
 
         Auth auth = tinderService.auth(new AuthData("token", "en"));
-        assertNotNull(auth);
-        assertNotNull(auth.getToken());
-        assertNotNull(auth.getGlobals());
-        assertNotNull(auth.getUser());
-        assertNotNull(auth.getVersions());
+        Auth expectedAuth = gson.fromJson(ResourcesLoader.loadAsString(Assertions.AUTH), Auth.class);
+
+        JsonElement authElement = gson.toJsonTree(auth);
+        JsonElement expectedElement = gson.toJsonTree(expectedAuth);
         
-        System.out.println("Current User: " + auth.getUser().toString());
+        assertEquals(expectedElement, authElement);
+    }
+    
+    @Test
+    public void shouldParseUserRecommendations() {
+        webServer.enqueue(MockResponsesFactory.createUserRecommendationsResponse());
+
+        Response<User> recommendations = tinderService.getUserRecommendations();
+        
+        assertNotNull(recommendations);
+        
+        assertNotNull(recommendations.getResults());
+        assertEquals(40, recommendations.getResults().size());
+        
+        User user = recommendations.getResults().get(0);
+        User expectedUser = gson.fromJson(ResourcesLoader.loadAsString(Assertions.FIRST_USER_RECOMMENDATION), User.class);
+        
+        JsonElement userElement = gson.toJsonTree(user);
+        JsonElement expectedElement = gson.toJsonTree(expectedUser);
+        
+        assertEquals(expectedElement, userElement);
+    }
+    
+    @Test
+    public void shouldParseUserInfo() {
+        webServer.enqueue(MockResponsesFactory.createUserRecommendationsResponse());
+        
+        Response<User> userResponse = tinderService.getUserInfo("whateverid");
+        
+        assertNotNull(userResponse.getResults());
     }
 
     @After

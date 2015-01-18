@@ -14,18 +14,12 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.interceptors;
+package com.aldoborrero.tinder.api.retrofit.exceptions;
 
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.Response;
-
-import java.io.IOException;
-
-public class AuthTokenInterceptor implements Interceptor {
-
-    @Override
-    public Response intercept(Chain chain) throws IOException {
-        return null;
+public class NotValidTokenException extends TinderException {
+    
+    public NotValidTokenException(Throwable cause) {
+        super(cause);
     }
-
+    
 }

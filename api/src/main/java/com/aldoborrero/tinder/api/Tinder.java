@@ -17,20 +17,21 @@
 package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
-import com.aldoborrero.tinder.api.okhttp.TinderOkHttpFactory;
 import com.aldoborrero.tinder.api.services.AsyncTinderService;
 import com.aldoborrero.tinder.api.services.ObservableTinderService;
 import com.aldoborrero.tinder.api.services.SyncTinderService;
-
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.Header;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
+
+import java.util.List;
 
 public class Tinder {
 
     private RestAdapter restAdapter;
-    private Configuration configuration;
+    private final Configuration configuration;
 
     public static Tinder create() {
         return create(Configuration.DEFAULT);
@@ -48,35 +49,39 @@ public class Tinder {
         if (restAdapter == null) {
             restAdapter = new RestAdapter.Builder()
                     .setEndpoint(configuration.getEndPoint())
-                    .setClient(new OkClient(TinderOkHttpFactory.create()))
+                    .setClient(new OkClient(configuration.getOkClient()))
                     .setConverter(new GsonConverter(TinderGsonFactory.create()))
                     .setRequestInterceptor(
                             new RequestInterceptor() {
                                 @Override
                                 public void intercept(RequestFacade requestFacade) {
+                                    List<Header> headerList = configuration.getExtraHeaders();
+                                    if (headerList != null) {
+                                        for (Header header : headerList) {
+                                            requestFacade.addHeader(header.getName(), header.getValue());
+                                        }
+                                    }
                                 }
                             }
                     )
+                    .setErrorHandler(configuration.getErrorHandler())
+                    .setLog(configuration.getLog())
+                    .setLogLevel(configuration.getLogLevel())
                     .build();
         }
-
         return restAdapter;
     }
 
-    public ObservableTinderService createObservableTinderService() {
+    public ObservableTinderService createObservableService() {
         return getRestAdapter().create(ObservableTinderService.class);
     }
 
-    public AsyncTinderService createAsyncTinderService() {
+    public AsyncTinderService createAsyncService() {
         return getRestAdapter().create(AsyncTinderService.class);
     }
 
-    public SyncTinderService createSyncTinderService() {
+    public SyncTinderService createSyncService() {
         return getRestAdapter().create(SyncTinderService.class);
-    }
-
-    public Configuration getConfiguration() {
-        return configuration;
     }
 
 }

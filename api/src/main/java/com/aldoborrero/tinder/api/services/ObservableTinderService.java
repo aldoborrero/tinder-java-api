@@ -16,18 +16,7 @@
 
 package com.aldoborrero.tinder.api.services;
 
-import com.aldoborrero.tinder.api.entities.Auth;
-import com.aldoborrero.tinder.api.entities.AuthData;
-import com.aldoborrero.tinder.api.entities.Like;
-import com.aldoborrero.tinder.api.entities.LikeMoment;
-import com.aldoborrero.tinder.api.entities.Moments;
-import com.aldoborrero.tinder.api.entities.Pass;
-import com.aldoborrero.tinder.api.entities.PassMoment;
-import com.aldoborrero.tinder.api.entities.PopularLocations;
-import com.aldoborrero.tinder.api.entities.Recommendations;
-import com.aldoborrero.tinder.api.entities.Updates;
-import com.aldoborrero.tinder.api.entities.User;
-
+import com.aldoborrero.tinder.api.entities.*;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -40,10 +29,10 @@ public interface ObservableTinderService {
     Observable<Auth> auth(@Body AuthData authData);
 
     @GET("/user/recs")
-    Observable<Recommendations> getUserRecommendations();
+    Observable<Response<User>> getUserRecommendations();
 
     @GET("/user/{id}")
-    Observable<User> getUserInfo(@Path("id") String id);
+    Observable<Response<User>> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
     Observable<Like> like(@Path("id") String id);
@@ -61,7 +50,7 @@ public interface ObservableTinderService {
     Observable<PassMoment> passMoment(@Path("id") String id);
 
     @GET("/location/popular")
-    Observable<PopularLocations> getPopularLocations();
+    Observable<Response<PopularLocation>> getPopularLocations();
 
     @POST("/updates")
     Observable<Updates> postUpdates();

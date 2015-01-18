@@ -9,14 +9,19 @@ public class MockResponsesFactory {
     
     public static MockResponse createAuthResponse() {
         MockResponse response = createJsonResponse();
-        response.setBody(Resources.loadBuffer(Resources.AUTH));
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.AUTH));
         return response;
     }
-    
+
+    public static MockResponse createUserRecommendationsResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.USER_RECS));
+        return response;
+    }
+
     public static MockResponse createJsonResponse() {
         MockResponse response = new MockResponse();
         response.addHeader(CONTENT_TYPE, JSON);
         return response;
     }
-
 }

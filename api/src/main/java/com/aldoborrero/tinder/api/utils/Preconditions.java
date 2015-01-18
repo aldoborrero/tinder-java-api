@@ -19,7 +19,7 @@ package com.aldoborrero.tinder.api.utils;
 
 import org.jetbrains.annotations.Nullable;
 
-public class Preconditions {
+public final class Preconditions {
 
     // Method ripped from Guava Preconditions class! >_<
     public static <T> T checkNotNull(T reference, @Nullable Object errorMessage) {

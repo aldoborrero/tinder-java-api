@@ -1,5 +1,6 @@
 /*
  * Copyright 2015 Aldo Borrero <aldo@aldoborrero.com>
+ * Copyright (C) 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,5 +17,5 @@
 
 package com.aldoborrero.tinder.api.entities;
 
-public class LikeMoment implements Result {
+public interface Result {
 }

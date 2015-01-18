@@ -21,8 +21,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 import java.util.List;
 
-public class User {
-
+public class User implements Result {
+    
     private String _id;
     private Date activeTime;
     private Date createDate;

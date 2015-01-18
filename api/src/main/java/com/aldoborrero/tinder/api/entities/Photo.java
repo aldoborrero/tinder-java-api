@@ -20,9 +20,30 @@ import java.util.List;
 
 public class Photo {
 
+    private String id;
     private String url;
     private List<ProcessedFile> processedFiles;
+    private Extension extension;
+    private String filename;
+    private boolean main;
 
+    public Photo() {
+    }
+
+    public Photo(String url, List<ProcessedFile> processedFiles, Extension extension) {
+        this.url = url;
+        this.processedFiles = processedFiles;
+        this.extension = extension;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getUrl() {
         return url;
     }
@@ -39,12 +60,42 @@ public class Photo {
         this.processedFiles = processedFiles;
     }
 
+    public Extension getExtension() {
+        return extension;
+    }
+
+    public void setExtension(Extension extension) {
+        this.extension = extension;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+    
+    public boolean isMain() {
+        return main;
+    }
+
+    public void setMain(boolean main) {
+        this.main = main;
+    }
+    
     @Override
     public String toString() {
         return "Photo{" +
                 "url='" + url + '\'' +
                 ", processedFiles=" + processedFiles +
                 '}';
+    }
+
+    public enum Extension {
+        JPG,
+        PNG,
+        WEBP
     }
     
 }

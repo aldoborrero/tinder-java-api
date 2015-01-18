@@ -16,15 +16,26 @@
 
 package com.aldoborrero.tinder.api.okhttp;
 
-import com.aldoborrero.tinder.api.interceptors.AuthTokenInterceptor;
 import com.squareup.okhttp.OkHttpClient;
 
-public class TinderOkHttpFactory {
+import java.util.concurrent.TimeUnit;
+
+public final class TinderOkHttpFactory {
+
+    public static final int CONNECT_TIMEOUT_MILLIS = 15 * 1000; // 15s
+
+    public static final int READ_TIMEOUT_MILLIS = 20 * 1000; // 20s
 
     public static OkHttpClient create() {
         OkHttpClient client = new OkHttpClient();
-        client.networkInterceptors().add(new AuthTokenInterceptor());
+        client.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        client.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
+        //client.networkInterceptors().add(new AuthTokenInterceptor());
         return client;
     }
 
+    private TinderOkHttpFactory() {
+        throw new AssertionError("No instances of this object are allowed!");
+    }
+    
 }

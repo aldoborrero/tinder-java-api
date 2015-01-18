@@ -14,7 +14,18 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.entities;
+package com.aldoborrero.tinder.api.okhttp.interceptors;
 
-public class LikeMoment implements Result {
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
+
+public class AuthTokenInterceptor implements Interceptor {
+
+    @Override
+    public Response intercept(Chain chain) throws IOException {
+        return null;
+    }
+
 }

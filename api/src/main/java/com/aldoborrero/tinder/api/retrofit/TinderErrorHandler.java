@@ -14,7 +14,24 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.entities;
+package com.aldoborrero.tinder.api.retrofit;
 
-public class PopularLocations {
+import com.aldoborrero.tinder.api.retrofit.exceptions.NotValidTokenException;
+import retrofit.ErrorHandler;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+public class TinderErrorHandler implements ErrorHandler {
+
+    private static final int UNAUTHORIZED = 401;
+
+    @Override
+    public Throwable handleError(RetrofitError cause) {
+        Response response = cause.getResponse();
+        if (response != null && response.getStatus() == UNAUTHORIZED) {
+            return new NotValidTokenException(cause);
+        }
+        return cause;
+    }
+
 }

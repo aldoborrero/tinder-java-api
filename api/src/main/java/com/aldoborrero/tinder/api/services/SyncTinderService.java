@@ -16,18 +16,7 @@
 
 package com.aldoborrero.tinder.api.services;
 
-import com.aldoborrero.tinder.api.entities.Auth;
-import com.aldoborrero.tinder.api.entities.AuthData;
-import com.aldoborrero.tinder.api.entities.Like;
-import com.aldoborrero.tinder.api.entities.LikeMoment;
-import com.aldoborrero.tinder.api.entities.Moments;
-import com.aldoborrero.tinder.api.entities.Pass;
-import com.aldoborrero.tinder.api.entities.PassMoment;
-import com.aldoborrero.tinder.api.entities.PopularLocations;
-import com.aldoborrero.tinder.api.entities.Recommendations;
-import com.aldoborrero.tinder.api.entities.Updates;
-import com.aldoborrero.tinder.api.entities.User;
-
+import com.aldoborrero.tinder.api.entities.*;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -39,10 +28,10 @@ public interface SyncTinderService {
     Auth auth(@Body AuthData authData);
 
     @GET("/user/recs")
-    Recommendations getUserRecommendations();
+    Response<User> getUserRecommendations();
 
     @GET("/user/{id}")
-    User getUserInfo(@Path("id") String id);
+    Response<User> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
     Like like(@Path("id") String id);
@@ -54,13 +43,13 @@ public interface SyncTinderService {
     Moments postMomentsFeed();
 
     @POST("/moment/{id}/like")
-    LikeMoment likeMoment(@Path("id") String id);
+    Response<LikeMoment> likeMoment(@Path("id") String id);
 
     @POST("/moment/{id}/pass")
-    PassMoment passMoment(@Path("id") String id);
+    Response<PassMoment> passMoment(@Path("id") String id);
 
     @GET("/location/popular")
-    PopularLocations getPopularLocations();
+    Response<PopularLocation> getPopularLocations();
 
     @POST("/updates")
     Updates postUpdates();

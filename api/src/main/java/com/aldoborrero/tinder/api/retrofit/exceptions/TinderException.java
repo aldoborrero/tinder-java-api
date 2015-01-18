@@ -14,7 +14,16 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.entities;
+package com.aldoborrero.tinder.api.retrofit.exceptions;
 
-public class LikeMoment implements Result {
+public class TinderException extends RuntimeException {
+    
+    public TinderException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public TinderException(Throwable cause) {
+        super(cause);
+    }
+
 }

@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 
-package com.aldoborrero.tinder.api.entities;
+package com.aldoborrero.tinder.api.mock;
 
-public class Recommendations {
+public class Assertions {
+    
+    private static final String ASSERTIONS_PATH = "/assertions/";
+
+    public static final String AUTH = ASSERTIONS_PATH + "auth.json";
+
+    public static final String FIRST_USER_RECOMMENDATION = ASSERTIONS_PATH + "first_user_recommendation.json";
 }
