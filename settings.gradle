@@ -1,1 +1,1 @@
-include ':api', ':mock-api'
+include ':api'
