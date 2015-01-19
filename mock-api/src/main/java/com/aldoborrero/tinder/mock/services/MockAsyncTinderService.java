@@ -15,7 +15,7 @@ public class MockAsyncTinderService implements AsyncTinderService {
     }
 
     @Override
-    public void getUserRecommendations(Callback<Response<User>> cb) {
+    public void getUserRecommendations(Callback<MultipleResponse<User>> cb) {
 
     }
 
@@ -50,7 +50,7 @@ public class MockAsyncTinderService implements AsyncTinderService {
     }
 
     @Override
-    public void getPopularLocations(Callback<Response<PopularLocation>> cb) {
+    public void getPopularLocations(Callback<MultipleResponse<PopularLocation>> cb) {
 
     }
 

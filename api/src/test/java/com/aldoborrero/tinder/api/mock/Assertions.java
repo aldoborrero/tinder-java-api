@@ -21,6 +21,8 @@ public class Assertions {
     private static final String ASSERTIONS_PATH = "/assertions/";
 
     public static final String AUTH = ASSERTIONS_PATH + "auth.json";
-
     public static final String FIRST_USER_RECOMMENDATION = ASSERTIONS_PATH + "first_user_recommendation.json";
+    public static final String USER_INFO = ASSERTIONS_PATH + "user_info.json";
+    public static final String POPULAR_LOCATION = ASSERTIONS_PATH + "popular_location.json";
+    
 }

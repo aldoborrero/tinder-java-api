@@ -18,8 +18,8 @@ package com.aldoborrero.tinder.api.entities;
 
 public class PopularLocation implements Result {
     
-    private long lat;
-    private long lon;
+    private double lat;
+    private double lon;
     private Locality locality;
     private Country country;
     private AdministrativeArea administrativeAreaLevel1;
@@ -34,7 +34,7 @@ public class PopularLocation implements Result {
         this.locality = locality;
     }
 
-    public long getLat() {
+    public double getLat() {
         return lat;
     }
 
@@ -42,7 +42,7 @@ public class PopularLocation implements Result {
         this.lat = lat;
     }
 
-    public long getLon() {
+    public double getLon() {
         return lon;
     }
 

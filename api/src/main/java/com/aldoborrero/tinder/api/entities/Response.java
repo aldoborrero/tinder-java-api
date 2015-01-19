@@ -17,45 +17,8 @@
 package com.aldoborrero.tinder.api.entities;
 
 import com.google.gson.annotations.SerializedName;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class Response<T extends Result> {
-
-    private Status status;
-    private Error error;
-
-    private List<T> results;
-
-    public Response() {
-    }
-    
-    public Response(Status status, List<T> results) {
-        this.status = status;
-        this.results = results;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public Error getError() {
-        return error;
-    }
-
-    @Nullable
-    public List<T> getResults() {
-        return results;
-    }
-
-    @Override
-    public String toString() {
-        return "Response{" +
-                "status=" + status +
-                ", results=" + results +
-                '}';
-    }
+public interface Response {
 
     public enum Status {
 
@@ -64,11 +27,11 @@ public class Response<T extends Result> {
 
         @SerializedName("401")
         UNAUTHORIZED,
-        
+
         @SerializedName("500")
         INTERNAL_SERVER_ERROR
     }
-    
+
     public enum Error {
         API_TOKEN_INVALID,
         NONE

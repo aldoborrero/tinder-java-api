@@ -29,10 +29,10 @@ public interface ObservableTinderService {
     Observable<Auth> auth(@Body AuthData authData);
 
     @GET("/user/recs")
-    Observable<Response<User>> getUserRecommendations();
+    Observable<MultipleResponse<User>> getUserRecommendations();
 
     @GET("/user/{id}")
-    Observable<Response<User>> getUserInfo(@Path("id") String id);
+    Observable<SingleResponse<User>> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
     Observable<Like> like(@Path("id") String id);
@@ -50,7 +50,7 @@ public interface ObservableTinderService {
     Observable<PassMoment> passMoment(@Path("id") String id);
 
     @GET("/location/popular")
-    Observable<Response<PopularLocation>> getPopularLocations();
+    Observable<MultipleResponse<PopularLocation>> getPopularLocations();
 
     @POST("/updates")
     Observable<Updates> postUpdates();

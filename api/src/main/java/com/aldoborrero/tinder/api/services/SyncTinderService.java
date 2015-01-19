@@ -28,10 +28,10 @@ public interface SyncTinderService {
     Auth auth(@Body AuthData authData);
 
     @GET("/user/recs")
-    Response<User> getUserRecommendations();
+    MultipleResponse<User> getUserRecommendations();
 
     @GET("/user/{id}")
-    Response<User> getUserInfo(@Path("id") String id);
+    SingleResponse<User> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
     Like like(@Path("id") String id);
@@ -43,13 +43,13 @@ public interface SyncTinderService {
     Moments postMomentsFeed();
 
     @POST("/moment/{id}/like")
-    Response<LikeMoment> likeMoment(@Path("id") String id);
+    MultipleResponse<LikeMoment> likeMoment(@Path("id") String id);
 
     @POST("/moment/{id}/pass")
-    Response<PassMoment> passMoment(@Path("id") String id);
+    MultipleResponse<PassMoment> passMoment(@Path("id") String id);
 
     @GET("/location/popular")
-    Response<PopularLocation> getPopularLocations();
+    MultipleResponse<PopularLocation> getPopularLocations();
 
     @POST("/updates")
     Updates postUpdates();

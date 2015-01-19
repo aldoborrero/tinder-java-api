@@ -18,10 +18,7 @@ package com.aldoborrero.tinder.api.services;
 
 import com.aldoborrero.tinder.api.Configuration;
 import com.aldoborrero.tinder.api.Tinder;
-import com.aldoborrero.tinder.api.entities.Auth;
-import com.aldoborrero.tinder.api.entities.AuthData;
-import com.aldoborrero.tinder.api.entities.Response;
-import com.aldoborrero.tinder.api.entities.User;
+import com.aldoborrero.tinder.api.entities.*;
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
 import com.aldoborrero.tinder.api.mock.Assertions;
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory;
@@ -94,7 +91,7 @@ public class SyncTinderServiceTest {
     public void shouldParseUserRecommendations() {
         webServer.enqueue(MockResponsesFactory.createUserRecommendationsResponse());
 
-        Response<User> recommendations = tinderService.getUserRecommendations();
+        MultipleResponse<User> recommendations = tinderService.getUserRecommendations();
         
         assertNotNull(recommendations);
         
@@ -112,11 +109,36 @@ public class SyncTinderServiceTest {
     
     @Test
     public void shouldParseUserInfo() {
-        webServer.enqueue(MockResponsesFactory.createUserRecommendationsResponse());
+        webServer.enqueue(MockResponsesFactory.createUserInfoResponse());
         
-        Response<User> userResponse = tinderService.getUserInfo("whateverid");
+        SingleResponse<User> userResponse = tinderService.getUserInfo("whateverid");
+        User expectedUser = gson.fromJson(ResourcesLoader.loadAsString(Assertions.USER_INFO), User.class);
         
-        assertNotNull(userResponse.getResults());
+        assertNotNull(userResponse.getResult());
+        assertEquals(MultipleResponse.Status.OK, userResponse.getStatus());
+
+        JsonElement userElement = gson.toJsonTree(userResponse.getResult());
+        JsonElement expectedElement = gson.toJsonTree(expectedUser);
+
+        assertEquals(expectedElement, userElement);
+    }
+    
+    @Test
+    public void shouldParsePopularLocations() {
+        webServer.enqueue(MockResponsesFactory.createPopularLocationsResponse());
+
+        MultipleResponse<PopularLocation> popularResponse = tinderService.getPopularLocations();
+
+        assertNotNull(popularResponse.getResults());
+        assertEquals(21, popularResponse.getResults().size());
+
+        PopularLocation location = popularResponse.getResults().get(0);
+        PopularLocation expectedLocation = gson.fromJson(ResourcesLoader.loadAsString(Assertions.POPULAR_LOCATION), PopularLocation.class);
+
+        JsonElement locationElement = gson.toJsonTree(location);
+        JsonElement expectedElement = gson.toJsonTree(expectedLocation);
+
+        assertEquals(expectedElement, locationElement);
     }
 
     @After

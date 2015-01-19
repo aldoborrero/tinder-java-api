@@ -31,7 +31,7 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<Response<User>> getUserRecommendations() {
+    public Observable<MultipleResponse<User>> getUserRecommendations() {
         return null;
     }
 
@@ -66,7 +66,7 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<Response<PopularLocation>> getPopularLocations() {
+    public Observable<MultipleResponse<PopularLocation>> getPopularLocations() {
         return null;
     }
 

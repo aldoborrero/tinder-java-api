@@ -29,10 +29,10 @@ public interface AsyncTinderService {
     void auth(@Body AuthData authData, Callback<Auth> cb);
 
     @GET("/user/recs")
-    void getUserRecommendations(Callback<Response<User>> cb);
+    void getUserRecommendations(Callback<MultipleResponse<User>> cb);
 
     @GET("/user/{id}")
-    void getUserInfo(@Path("id") String id, Callback<Response<User>> cb);
+    void getUserInfo(@Path("id") String id, Callback<SingleResponse<User>> cb);
 
     @GET("/like/{id}")
     void like(@Path("id") String id, Callback<Like> cb);
@@ -50,7 +50,7 @@ public interface AsyncTinderService {
     void passMoment(@Path("id") String id, Callback<PassMoment> cb);
 
     @GET("/location/popular")
-    void getPopularLocations(Callback<Response<PopularLocation>> cb);
+    void getPopularLocations(Callback<MultipleResponse<PopularLocation>> cb);
 
     @POST("/updates")
     void postUpdates(Callback<Updates> cb);

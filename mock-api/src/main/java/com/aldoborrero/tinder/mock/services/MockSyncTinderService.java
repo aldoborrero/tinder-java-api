@@ -13,7 +13,7 @@ public class MockSyncTinderService implements SyncTinderService {
     }
 
     @Override
-    public Response<User> getUserRecommendations() {
+    public MultipleResponse<User> getUserRecommendations() {
         return null;
     }
 
@@ -38,17 +38,17 @@ public class MockSyncTinderService implements SyncTinderService {
     }
 
     @Override
-    public Response<LikeMoment> likeMoment(@Path("id") String id) {
+    public MultipleResponse<LikeMoment> likeMoment(@Path("id") String id) {
         return null;
     }
 
     @Override
-    public Response<PassMoment> passMoment(@Path("id") String id) {
+    public MultipleResponse<PassMoment> passMoment(@Path("id") String id) {
         return null;
     }
 
     @Override
-    public Response<PopularLocation> getPopularLocations() {
+    public MultipleResponse<PopularLocation> getPopularLocations() {
         return null;
     }
 

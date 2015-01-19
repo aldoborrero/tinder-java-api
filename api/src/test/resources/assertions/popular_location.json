@@ -1,0 +1,20 @@
+{
+  "lat": 34.0522342,
+  "lon": -118.2436849,
+  "locality": {
+    "short_name": "Los Angeles",
+    "long_name": "Los Angeles"
+  },
+  "administrative_area_level_1": {
+    "short_name": "CA",
+    "long_name": "California"
+  },
+  "administrative_area_level_2": {
+    "short_name": "Los Angeles County",
+    "long_name": "Los Angeles County"
+  },
+  "country": {
+    "short_name": "US",
+    "long_name": "United States"
+  }
+}

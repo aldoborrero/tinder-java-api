@@ -19,6 +19,18 @@ public class MockResponsesFactory {
         return response;
     }
 
+    public static MockResponse createUserInfoResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.USER_INFO));
+        return response;
+    }
+
+    public static MockResponse createPopularLocationsResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.POPULAR_LOCATIONS));
+        return response;
+    }
+
     public static MockResponse createJsonResponse() {
         MockResponse response = new MockResponse();
         response.addHeader(CONTENT_TYPE, JSON);
