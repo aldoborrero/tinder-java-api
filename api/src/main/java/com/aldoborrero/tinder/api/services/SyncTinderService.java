@@ -52,7 +52,7 @@ public interface SyncTinderService {
     MultipleResponse<PopularLocation> getPopularLocations();
 
     @POST("/updates")
-    Updates postUpdates();
+    Updates ping(@Body Update update);
 
     @POST("/profile")
     User updateUserInformation();

@@ -53,7 +53,7 @@ public interface AsyncTinderService {
     void getPopularLocations(Callback<MultipleResponse<PopularLocation>> cb);
 
     @POST("/updates")
-    void postUpdates(Callback<Updates> cb);
+    void ping(@Body Update update, Callback<Updates> cb);
 
     @POST("/profile")
     void updateUserInformation(Callback<User> cb);

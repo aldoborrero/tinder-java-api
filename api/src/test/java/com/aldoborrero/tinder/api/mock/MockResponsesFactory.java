@@ -31,6 +31,18 @@ public class MockResponsesFactory {
         return response;
     }
 
+    public static MockResponse createEmptyUpdatesResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.UPDATES_EMPTY));
+        return response;
+    }
+
+    public static MockResponse createUpdatesResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.UPDATES));
+        return response;
+    }
+
     public static MockResponse createJsonResponse() {
         MockResponse response = new MockResponse();
         response.addHeader(CONTENT_TYPE, JSON);

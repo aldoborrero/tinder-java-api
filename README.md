@@ -28,6 +28,12 @@ or your Maven project:
 
 ** Note: ** Adjust `X.X.X` to a corresponding version.
 
+## TODO
+
+* Intercept auth token
+* Finish basic tests
+* Implement correctly mock-api subproject
+
 ## Contributions
 
 Feel free to contribute to this project if you feel something could be improved or fixed. Only thing to notice is that commits should go to `develop` branch as master is for stable builds!

@@ -140,6 +140,22 @@ public class SyncTinderServiceTest {
 
         assertEquals(expectedElement, locationElement);
     }
+    
+    @Test
+    public void shouldParseUpdatesCorrectly() {
+        webServer.enqueue(MockResponsesFactory.createEmptyUpdatesResponse());
+
+        Updates updates = tinderService.ping(new Update());
+
+        assertNotNull(updates);
+        assertEquals(0, updates.getBlocks().size());
+        assertEquals(0, updates.getMatches().size());
+        assertEquals(0, updates.getMatches().size());
+        assertNotNull(updates.getLastActivityDate());
+        
+        //webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
+        
+    }
 
     @After
     public void tearDown() throws IOException {

@@ -53,7 +53,7 @@ public interface ObservableTinderService {
     Observable<MultipleResponse<PopularLocation>> getPopularLocations();
 
     @POST("/updates")
-    Observable<Updates> postUpdates();
+    Observable<Updates> ping(@Body Update update);
 
     @POST("/profile")
     Observable<User> updateUserInformation();

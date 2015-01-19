@@ -17,38 +17,17 @@
 package com.aldoborrero.tinder.api.entities;
 
 import java.util.Date;
-import java.util.List;
 
-public class Updates {
+public class Update {
     
-    private List<Match> matches;
-    private List<String> blocks;
-    //private List<Matchmaker> matchmaker;
-    //private List<Lists> lists;
-    //private List<DeletedLists> deletedLists;
     private Date lastActivityDate;
 
-    public Updates() {
+    public Update() {
+        this.lastActivityDate = new Date();
     }
 
-    public Updates(Date lastActivityDate) {
+    public Update(Date lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
-    }
-
-    public List<Match> getMatches() {
-        return matches;
-    }
-
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-
-    public List<String> getBlocks() {
-        return blocks;
-    }
-
-    public void setBlocks(List<String> blocks) {
-        this.blocks = blocks;
     }
 
     public Date getLastActivityDate() {

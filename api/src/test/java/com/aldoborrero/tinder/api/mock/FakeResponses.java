@@ -15,5 +15,6 @@ public class FakeResponses {
     public static final String USER_INFORMATION = RESPONSES + "user_information.json";
     public static final String USER_RECS = RESPONSES + "user_recs.json";
     public static final String USER_INFO = RESPONSES + "user_information.json";
-
+    public static final String UPDATES = RESPONSES + "updates_with_content.json";
+    
 }
