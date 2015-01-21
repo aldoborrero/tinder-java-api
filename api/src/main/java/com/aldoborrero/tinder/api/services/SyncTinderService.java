@@ -34,7 +34,7 @@ public interface SyncTinderService {
     SingleResponse<User> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
-    Like like(@Path("id") String id);
+    MatchResponse<Match> like(@Path("id") String id);
 
     @GET("/pass/{id}")
     Pass pass(@Path("id") String id);

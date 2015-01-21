@@ -28,6 +28,8 @@ public final class TinderGsonFactory {
         RuntimeRegexTypeAdapterFactory<Result> typeAdapterFactory = RuntimeRegexTypeAdapterFactory.of(Result.class)
                 .registerSubtype(User.class, ConverterRegex.USER_ID);
 
+        MatchTypeFactory matchTypeFactory = new MatchTypeFactory();
+
         return new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setPrettyPrinting()
@@ -35,6 +37,7 @@ public final class TinderGsonFactory {
                 .registerTypeAdapter(TokenConverter.TYPE, new TokenConverter())
                 .registerTypeAdapter(ErrorConverter.TYPE, new ErrorConverter())
                 .registerTypeAdapterFactory(typeAdapterFactory)
+                .registerTypeAdapterFactory(matchTypeFactory)
                 .create();
     }
 

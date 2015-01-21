@@ -125,7 +125,7 @@ import java.util.regex.Pattern;
  *
  * @author Aldo Borrero <aldo@aldoborrero.com>
  */
-public class RuntimeRegexTypeAdapterFactory<T> implements TypeAdapterFactory {
+class RuntimeRegexTypeAdapterFactory<T> implements TypeAdapterFactory {
 
     private final Class<?> baseType;
     private final Map<Class<?>, Pattern> subtypeToPattern = new LinkedHashMap<>(); // Yup, not the best objects to form a K,V Map...

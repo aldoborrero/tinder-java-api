@@ -16,26 +16,57 @@
 
 package com.aldoborrero.tinder.api.entities;
 
-import com.google.gson.annotations.SerializedName;
-
+import java.util.Date;
 import java.util.List;
 
-public class MatchedLike implements Like {
+public class MutualMatch implements Match {
 
-    @SerializedName("_id")
+    private String _id;
     private String id;
     private boolean closed;
     private int commonFriendCount;
     private int commonLikeCount;
-    private String createdDate;
+    private Date createdDate;
     private boolean dead;
-    private String lastActivityDate;
+    private Date lastActivityDate;
     private int messageCount;
     private List<Message> messages;
     private List<String> participants;
     private boolean pending;
     private boolean following;
     private boolean followingMoments;
+    private User person;
+
+    public MutualMatch() {
+    }
+
+    public MutualMatch(String _id, String id, boolean closed, int commonFriendCount, int commonLikeCount, Date createdDate,
+                       boolean dead, Date lastActivityDate, int messageCount, List<Message> messages, List<String> participants,
+                       boolean pending, boolean following, boolean followingMoments, User person) {
+        this._id = _id;
+        this.id = id;
+        this.closed = closed;
+        this.commonFriendCount = commonFriendCount;
+        this.commonLikeCount = commonLikeCount;
+        this.createdDate = createdDate;
+        this.dead = dead;
+        this.lastActivityDate = lastActivityDate;
+        this.messageCount = messageCount;
+        this.messages = messages;
+        this.participants = participants;
+        this.pending = pending;
+        this.following = following;
+        this.followingMoments = followingMoments;
+        this.person = person;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
     public String getId() {
         return id;
@@ -69,11 +100,11 @@ public class MatchedLike implements Like {
         this.commonLikeCount = commonLikeCount;
     }
 
-    public String getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -85,11 +116,11 @@ public class MatchedLike implements Like {
         this.dead = dead;
     }
 
-    public String getLastActivityDate() {
+    public Date getLastActivityDate() {
         return lastActivityDate;
     }
 
-    public void setLastActivityDate(String lastActivityDate) {
+    public void setLastActivityDate(Date lastActivityDate) {
         this.lastActivityDate = lastActivityDate;
     }
 
@@ -141,9 +172,42 @@ public class MatchedLike implements Like {
         this.followingMoments = followingMoments;
     }
 
+    public User getPerson() {
+        return person;
+    }
+
+    public void setPerson(User person) {
+        this.person = person;
+    }
+
+    public boolean isMutual() {
+        return this._id != null;
+    }
+
     @Override
     public Type getType() {
-        return Type.MATCHED;
+        return Type.MUTUAL;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "_id='" + _id + '\'' +
+                ", id='" + id + '\'' +
+                ", closed=" + closed +
+                ", commonFriendCount=" + commonFriendCount +
+                ", commonLikeCount=" + commonLikeCount +
+                ", createdDate=" + createdDate +
+                ", dead=" + dead +
+                ", lastActivityDate=" + lastActivityDate +
+                ", messageCount=" + messageCount +
+                ", messages=" + messages +
+                ", participants=" + participants +
+                ", pending=" + pending +
+                ", following=" + following +
+                ", followingMoments=" + followingMoments +
+                ", person=" + person +
+                '}';
     }
 
 }

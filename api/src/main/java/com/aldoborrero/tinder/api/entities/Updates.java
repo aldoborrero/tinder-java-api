@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Updates {
     
-    private List<Match> matches;
+    private List<MutualMatch> matches;
     private List<String> blocks;
     //private List<Matchmaker> matchmaker;
     //private List<Lists> lists;
@@ -35,11 +35,11 @@ public class Updates {
         this.lastActivityDate = lastActivityDate;
     }
 
-    public List<Match> getMatches() {
+    public List<MutualMatch> getMatches() {
         return matches;
     }
 
-    public void setMatches(List<Match> matches) {
+    public void setMatches(List<MutualMatch> matches) {
         this.matches = matches;
     }
 

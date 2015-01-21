@@ -43,6 +43,18 @@ public class MockResponsesFactory {
         return response;
     }
 
+    public static MockResponse createLikeWithMatchResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.LIKE_MATCHED));
+        return response;
+    }
+
+    public static MockResponse createLikeWithoutMatchResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.LIKE_NOT_MATCHED));
+        return response;
+    }
+
     public static MockResponse createJsonResponse() {
         MockResponse response = new MockResponse();
         response.addHeader(CONTENT_TYPE, JSON);

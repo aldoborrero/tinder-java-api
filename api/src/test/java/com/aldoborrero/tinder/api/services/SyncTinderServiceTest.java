@@ -35,8 +35,7 @@ import retrofit.Endpoints;
 
 import java.io.IOException;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.*;
 
 public class SyncTinderServiceTest {
 
@@ -143,6 +142,7 @@ public class SyncTinderServiceTest {
     
     @Test
     public void shouldParseUpdatesCorrectly() {
+        // Empty response
         webServer.enqueue(MockResponsesFactory.createEmptyUpdatesResponse());
 
         Updates updates = tinderService.ping(new Update());
@@ -153,8 +153,42 @@ public class SyncTinderServiceTest {
         assertEquals(0, updates.getMatches().size());
         assertNotNull(updates.getLastActivityDate());
         
-        //webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
+        // Not empty response
+        webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
+
+        updates = tinderService.ping(new Update());
+
+        assertNotNull(updates);
+        assertEquals(3, updates.getBlocks().size());
+        assertEquals(3, updates.getMatches().get(0).getMessages().size());
+    }
+
+    @Test
+    public void shouldParseLikeAction() {
+        // Match!!! Congrats buddy! You're on fire! :D
+        webServer.enqueue(MockResponsesFactory.createLikeWithMatchResponse());
         
+        MatchResponse match = tinderService.like("whateverid");
+        
+        assertNotNull(match);
+        assertNotNull(match.getMatch());
+        assertTrue(match.isMutual());
+        assertTrue(match.getMatch().getType().equals(Match.Type.MUTUAL));
+        
+        // Mot match! You're not on fire buddy! :'(
+        webServer.enqueue(MockResponsesFactory.createLikeWithoutMatchResponse());
+        
+        match = tinderService.like("whateverid");
+        
+        assertNotNull(match);
+        assertNotNull(match.getMatch());
+        assertFalse(match.isMutual());
+        assertTrue(match.getMatch().getType().equals(Match.Type.NON_MUTUAL));
+    }
+    
+    @Test
+    public void shouldParsePassAction() {
+    
     }
 
     @After
