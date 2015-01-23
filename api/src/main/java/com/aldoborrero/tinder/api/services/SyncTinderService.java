@@ -34,10 +34,10 @@ public interface SyncTinderService {
     SingleResponse<User> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
-    MatchResponse<Match> like(@Path("id") String id);
+    LikeResponse<Match> like(@Path("id") String id);
 
     @GET("/pass/{id}")
-    Pass pass(@Path("id") String id);
+    PassResponse pass(@Path("id") String id);
 
     @POST("/feed/moments")
     Moments postMomentsFeed();

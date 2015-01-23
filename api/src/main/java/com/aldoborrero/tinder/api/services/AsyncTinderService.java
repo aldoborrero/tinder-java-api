@@ -35,7 +35,7 @@ public interface AsyncTinderService {
     void getUserInfo(@Path("id") String id, Callback<SingleResponse<User>> cb);
 
     @GET("/like/{id}")
-    void like(@Path("id") String id, Callback<MatchResponse<Match>> cb);
+    void like(@Path("id") String id, Callback<LikeResponse<Match>> cb);
 
     @GET("/pass/{id}")
     void pass(@Path("id") String id, Callback<Pass> cb);

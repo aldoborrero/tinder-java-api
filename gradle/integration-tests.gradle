@@ -1,0 +1,33 @@
+// Source created by @brunodecarvalho with some minor modifications done by me (@aldoborrero)
+// Original url: https://raw.githubusercontent.com/brunodecarvalho/gradle-plugins/master/integration-test.gradle
+
+// Assumes 'java', 'groovy' or 'scala' plugins have been applied before
+
+// Add integration test source sets
+sourceSets {
+    integrationTest { sourceSet ->
+        ["java", "groovy", "resources"].each {
+            if (!sourceSet.hasProperty(it)) return
+            sourceSet."$it".srcDir file("src/integration-test/${it}")
+        }
+    }
+}
+
+// Setup dependencies for integration testing
+dependencies {
+    integrationTestCompile sourceSets.main.output
+    integrationTestCompile sourceSets.test.output
+    integrationTestCompile configurations.testCompile
+    integrationTestRuntime configurations.testRuntime
+}
+
+// Define integration test task
+task integrationTest(type: Test) {
+    description = "Runs Integration Tests"
+    group = "Verification"
+    testClassesDir = sourceSets.integrationTest.output.classesDir
+    classpath = sourceSets.integrationTest.runtimeClasspath
+}
+
+// Make sure 'check' task calls integration test
+check.dependsOn integrationTest

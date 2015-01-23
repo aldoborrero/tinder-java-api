@@ -55,6 +55,12 @@ public class MockResponsesFactory {
         return response;
     }
 
+    public static MockResponse createPassResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.PASS));
+        return response;
+    }
+
     public static MockResponse createJsonResponse() {
         MockResponse response = new MockResponse();
         response.addHeader(CONTENT_TYPE, JSON);

@@ -168,7 +168,7 @@ public class SyncTinderServiceTest {
         // Match!!! Congrats buddy! You're on fire! :D
         webServer.enqueue(MockResponsesFactory.createLikeWithMatchResponse());
         
-        MatchResponse match = tinderService.like("whateverid");
+        LikeResponse match = tinderService.like("whateverid");
         
         assertNotNull(match);
         assertNotNull(match.getMatch());
@@ -188,8 +188,22 @@ public class SyncTinderServiceTest {
     
     @Test
     public void shouldParsePassAction() {
-    
+        webServer.enqueue(MockResponsesFactory.createPassResponse());
+
+        PassResponse passResponse = tinderService.pass("whateverid");
+        
+        assertNotNull(passResponse);
+        assertNotNull(passResponse.getStatus().equals(Response.Status.OK));
     }
+    
+    @Test
+    public void shouldParseLikeMomentAction() {}
+    
+    @Test
+    public void shouldParsePassMomentAction() {}
+    
+    @Test
+    public void shouldParseLogout() {}
 
     @After
     public void tearDown() throws IOException {

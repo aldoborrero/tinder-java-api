@@ -1,6 +1,8 @@
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath "net.saliman:gradle-cobertura-plugin:2.2.5"
@@ -10,9 +12,8 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
-        maven {
-            url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
-        }
+        maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
+        mavenLocal()
     }
 }
 
@@ -26,6 +27,15 @@ idea {
     }
 }
 
+subprojects {
+    idea {
+        module {
+            testSourceDirs += file('src/integration-test/java')
+            testSourceDirs += file('src/integration-test/groovy')
+        }
+    }
+}
+
 apply plugin: 'net.saliman.cobertura'
 
 cobertura {
@@ -34,4 +44,9 @@ cobertura {
     }
 }
 
+apply plugin: 'java'
 apply plugin: 'build-dashboard'
+
+buildDashboard {
+    reports.html.destination = "build/"
+}

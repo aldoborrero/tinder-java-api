@@ -35,7 +35,7 @@ public interface ObservableTinderService {
     Observable<SingleResponse<User>> getUserInfo(@Path("id") String id);
 
     @GET("/like/{id}")
-    Observable<MatchResponse<Match>> like(@Path("id") String id);
+    Observable<LikeResponse<Match>> like(@Path("id") String id);
 
     @GET("/pass/{id}")
     Observable<Pass> pass(@Path("id") String id);

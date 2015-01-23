@@ -16,17 +16,15 @@
 
 package com.aldoborrero.tinder.api.entities;
 
-public class MatchResponse<T extends Match> {
+public class PassResponse {
     
     private Response.Status status;
-    private Match match;
 
-    public MatchResponse() {
+    public PassResponse() {
     }
 
-    public MatchResponse(Response.Status status, Match match) {
+    public PassResponse(Response.Status status) {
         this.status = status;
-        this.match = match;
     }
 
     public Response.Status getStatus() {
@@ -37,23 +35,10 @@ public class MatchResponse<T extends Match> {
         this.status = status;
     }
 
-    public Match getMatch() {
-        return match != null ? this.match : Match.FOREVER_ALONE;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
-    public boolean isMutual() {
-        return this.match != null;
-    }
-    
     @Override
     public String toString() {
-        return "MatchResponse{" +
+        return "PassResponse{" +
                 "status=" + status +
-                ", match=" + match +
                 '}';
     }
     
