@@ -25,7 +25,7 @@ import java.io.InputStream;
 public class ResourcesLoader {
 
     private static InputStream loadResource(String resource) {
-        return FakeResponses.class.getResourceAsStream(resource);
+        return ResourcesLoader.class.getResourceAsStream(resource);
     }
 
     public static Buffer loadAsBuffer(String resource) {

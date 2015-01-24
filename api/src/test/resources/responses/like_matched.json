@@ -1,0 +1,20 @@
+{
+    "match": {
+        "_id": "842066fdfe3fe1ad160fe790e41af09901100f39",
+        "closed": false,
+        "common_friend_count": 6,
+        "common_like_count": 19,
+        "created_date": "2014-12-12T21:19:35.001Z",
+        "dead": false,
+        "last_activity_date": "2015-01-12T21:19:35.001Z",
+        "message_count": 0,
+        "messages": [],
+        "participants": [
+            "b1c1d8736f20db3fb6c1c66bb1455ed43909f0d8",
+            "25b732b3425cf8421a84fbe8e6efa1aaf932ad4b"
+        ],
+        "pending": false,
+        "following": true,
+        "following_moments": true
+    }
+}
