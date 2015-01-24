@@ -8,27 +8,22 @@ import retrofit.http.Path;
 public class MockSyncTinderService implements SyncTinderService {
 
     @Override
-    public Auth auth(@Body AuthData authData) {
-        return null;
-    }
-
-    @Override
     public MultipleResponse<User> getUserRecommendations() {
         return null;
     }
 
     @Override
-    public User getUserInfo(@Path("id") String id) {
+    public SingleResponse<User> getUserInfo(@Path("id") String id) {
         return null;
     }
 
     @Override
-    public Like like(@Path("id") String id) {
+    public LikeResponse<Match> like(@Path("id") String id) {
         return null;
     }
 
     @Override
-    public Pass pass(@Path("id") String id) {
+    public PassResponse pass(@Path("id") String id) {
         return null;
     }
 
@@ -53,7 +48,7 @@ public class MockSyncTinderService implements SyncTinderService {
     }
 
     @Override
-    public Updates postUpdates() {
+    public Updates ping(@Body Update update) {
         return null;
     }
 

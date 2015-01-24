@@ -36,12 +36,12 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<User> getUserInfo(@Path("id") String id) {
+    public Observable<SingleResponse<User>> getUserInfo(@Path("id") String id) {
         return null;
     }
 
     @Override
-    public Observable<Like> like(@Path("id") String id) {
+    public Observable<LikeResponse<Match>> like(@Path("id") String id) {
         return null;
     }
 
@@ -71,7 +71,7 @@ public class MockObservableTinderService implements ObservableTinderService {
     }
 
     @Override
-    public Observable<Updates> postUpdates() {
+    public Observable<Updates> ping(@Body Update update) {
         return null;
     }
 

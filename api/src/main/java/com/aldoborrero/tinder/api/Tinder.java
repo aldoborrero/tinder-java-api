@@ -17,7 +17,10 @@
 package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
+import com.aldoborrero.tinder.api.okhttp.TinderOkHttpFactory;
+import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
 import com.aldoborrero.tinder.api.services.AsyncTinderService;
+import com.aldoborrero.tinder.api.services.AuthTinderService;
 import com.aldoborrero.tinder.api.services.ObservableTinderService;
 import com.aldoborrero.tinder.api.services.SyncTinderService;
 import retrofit.RequestInterceptor;
@@ -31,11 +34,8 @@ import java.util.List;
 public class Tinder {
 
     private RestAdapter restAdapter;
+    private RestAdapter authRestAdapter;
     private final Configuration configuration;
-
-    public static Tinder create() {
-        return create(Configuration.DEFAULT);
-    }
 
     public static Tinder create(Configuration configuration) {
         return new Tinder(configuration);
@@ -49,7 +49,7 @@ public class Tinder {
         if (restAdapter == null) {
             restAdapter = new RestAdapter.Builder()
                     .setEndpoint(configuration.getEndPoint())
-                    .setClient(new OkClient(configuration.getOkClient()))
+                    .setClient(new OkClient(TinderOkHttpFactory.create(configuration.getAuthTokenInterceptor())))
                     .setConverter(new GsonConverter(TinderGsonFactory.create()))
                     .setRequestInterceptor(
                             new RequestInterceptor() {
@@ -64,7 +64,7 @@ public class Tinder {
                                 }
                             }
                     )
-                    .setErrorHandler(configuration.getErrorHandler())
+                    .setErrorHandler(new TinderErrorHandler())
                     .setLog(configuration.getLog())
                     .setLogLevel(configuration.getLogLevel())
                     .build();
@@ -72,6 +72,35 @@ public class Tinder {
         return restAdapter;
     }
 
+    protected RestAdapter getAuthAdapter() {
+        if (authRestAdapter == null) {
+            authRestAdapter = new RestAdapter.Builder()
+                    .setEndpoint(configuration.getEndPoint())
+                    .setClient(new OkClient(TinderOkHttpFactory.create()))
+                    .setConverter(new GsonConverter(TinderGsonFactory.create()))
+                    .setRequestInterceptor(new RequestInterceptor() {
+                        @Override
+                        public void intercept(RequestFacade requestFacade) {
+                            List<Header> headerList = configuration.getExtraHeaders();
+                            if (headerList != null) {
+                                for (Header header : headerList) {
+                                    requestFacade.addHeader(header.getName(), header.getValue());
+                                }
+                            }
+                        }
+                    })
+                    .setErrorHandler(new TinderErrorHandler())
+                    .setLog(configuration.getLog())
+                    .setLogLevel(configuration.getLogLevel())
+                    .build();
+        }
+        return authRestAdapter;
+    }
+
+    public AuthTinderService createAuthTinderService() {
+        return getAuthAdapter().create(AuthTinderService.class);
+    }
+    
     public ObservableTinderService createObservableService() {
         return getRestAdapter().create(ObservableTinderService.class);
     }

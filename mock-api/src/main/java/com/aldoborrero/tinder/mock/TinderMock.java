@@ -13,10 +13,6 @@ import retrofit.MockRestAdapter;
 
 public class TinderMock extends Tinder {
     
-    public static Tinder create() {
-        return create(Configuration.DEFAULT);
-    }
-    
     public static Tinder create(Configuration configuration) {
         return new TinderMock(configuration);
     }

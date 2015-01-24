@@ -24,9 +24,6 @@ import retrofit.http.Path;
 
 public interface SyncTinderService {
 
-    @POST("/auth")
-    Auth auth(@Body AuthData authData);
-
     @GET("/user/recs")
     MultipleResponse<User> getUserRecommendations();
 

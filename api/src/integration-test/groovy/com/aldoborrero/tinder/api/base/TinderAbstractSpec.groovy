@@ -1,4 +1,4 @@
-package com.aldoborrero.tinder.api.services
+package com.aldoborrero.tinder.api.base
 
 import com.squareup.okhttp.mockwebserver.MockWebServer
 import spock.lang.Specification

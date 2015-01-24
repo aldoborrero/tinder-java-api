@@ -16,14 +16,11 @@
 
 package com.aldoborrero.tinder.api;
 
-import com.aldoborrero.tinder.api.okhttp.TinderOkHttpFactory;
-import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
+import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
 import com.aldoborrero.tinder.api.utils.Preconditions;
-import com.squareup.okhttp.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import retrofit.Endpoint;
-import retrofit.ErrorHandler;
 import retrofit.RestAdapter;
 import retrofit.client.Header;
 
@@ -33,20 +30,12 @@ import java.util.List;
 /** Configuration object to create instances of {@link com.aldoborrero.tinder.api.Tinder}. */
 public interface Configuration {
 
-    /**
-     * A default {@link Configuration} which mimics those defaults found in original Android client.
-     */
-    Configuration DEFAULT = new BaseConfiguration();
-
     @NotNull
     Endpoint getEndPoint();
 
     @Nullable
     List<Header> getExtraHeaders();
-    
-    @NotNull
-    ErrorHandler getErrorHandler();
-    
+
     @NotNull
     RestAdapter.Log getLog();
     
@@ -54,7 +43,7 @@ public interface Configuration {
     RestAdapter.LogLevel getLogLevel();
     
     @NotNull
-    OkHttpClient getOkClient();
+    AuthTokenInterceptor getAuthTokenInterceptor();
 
     class Headers {
         public static final Header USER_AGENT_HEADER = new Header("User-Agent", "Tinder Android Version 4.0.3");
@@ -71,7 +60,7 @@ public interface Configuration {
      * A convenience class to extend when you only want to listen for a subset
      * of all the methods leaving the rest with the defaults provided here.
      */
-    class BaseConfiguration implements Configuration {
+    abstract class BaseConfiguration implements Configuration {
 
         @NotNull
         @Override
@@ -92,12 +81,6 @@ public interface Configuration {
 
         @NotNull
         @Override
-        public ErrorHandler getErrorHandler() {
-            return new TinderErrorHandler();
-        }
-
-        @NotNull
-        @Override
         public RestAdapter.Log getLog() {
             return RestAdapter.Log.NONE;
         }
@@ -106,12 +89,6 @@ public interface Configuration {
         @Override
         public RestAdapter.LogLevel getLogLevel() {
             return RestAdapter.LogLevel.NONE;
-        }
-
-        @NotNull
-        @Override
-        public OkHttpClient getOkClient() {
-            return TinderOkHttpFactory.create();
         }
 
     }
@@ -135,9 +112,8 @@ public interface Configuration {
         public static Configuration validate(Configuration configuration) {
             Preconditions.checkNotNull(configuration, "Configuration must not be null!");
             Preconditions.checkNotNull(configuration.getEndPoint(), "Configuration Endpoint must not be null!");
-            Preconditions.checkNotNull(configuration.getErrorHandler(), "Configuration Error Handler must not be null!");
             Preconditions.checkNotNull(configuration.getLog(), "Configuration Log must not be null!");
-            Preconditions.checkNotNull(configuration.getOkClient(), "Configuration OkClient must not be null!");
+            Preconditions.checkNotNull(configuration.getAuthTokenInterceptor(), "Configuration AuthTokenInterceptor must not be null!");
             return configuration;
         }
         
