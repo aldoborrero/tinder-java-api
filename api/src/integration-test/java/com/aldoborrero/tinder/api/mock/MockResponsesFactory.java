@@ -6,7 +6,7 @@ public class MockResponsesFactory {
     
     private static final String CONTENT_TYPE = "Content-Type";
     private static final String JSON = "application/json; charset=utf-8";
-    
+
     public static MockResponse createAuthResponse() {
         MockResponse response = createJsonResponse();
         response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.AUTH));
@@ -58,6 +58,13 @@ public class MockResponsesFactory {
     public static MockResponse createPassResponse() {
         MockResponse response = createJsonResponse();
         response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.PASS));
+        return response;
+    }
+
+    public static MockResponse createBadAuthTokenResponse() {
+        MockResponse response = createJsonResponse();
+        response.setBody(ResourcesLoader.loadAsBuffer(FakeResponses.FORBIDDEN));
+        response.setResponseCode(401);
         return response;
     }
 

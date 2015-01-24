@@ -2,13 +2,7 @@ package com.aldoborrero.tinder.api.services
 
 import com.aldoborrero.tinder.api.Configuration
 import com.aldoborrero.tinder.api.Tinder
-import com.aldoborrero.tinder.api.entities.Auth
-import com.aldoborrero.tinder.api.entities.AuthData
-import com.aldoborrero.tinder.api.entities.MultipleResponse
-import com.aldoborrero.tinder.api.entities.PopularLocation
-import com.aldoborrero.tinder.api.entities.Response
-import com.aldoborrero.tinder.api.entities.SingleResponse
-import com.aldoborrero.tinder.api.entities.User
+import com.aldoborrero.tinder.api.entities.*
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory
 import com.aldoborrero.tinder.api.mock.Assertions
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
@@ -19,17 +13,14 @@ import com.squareup.okhttp.mockwebserver.MockWebServer
 import org.jetbrains.annotations.NotNull
 import retrofit.Endpoint
 import retrofit.Endpoints
-import spock.lang.Specification
 
-class ConversionJsonSpec extends Specification {
+class ConversionJsonSpec extends TinderAbstractSpec {
 
     def Gson gson;
-    def MockWebServer webServer;
     def SyncTinderService tinderService;
     
     def setup() {
         setupGson()
-        setupWebServer()
         setupTinderService()
     }
 

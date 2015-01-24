@@ -1,0 +1,4 @@
+{
+  "status": 401,
+  "error": "No session found for user with api_token: af923999-6cfb-4d91-bf31-a9c909dcc"
+}
