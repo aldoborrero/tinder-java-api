@@ -8,7 +8,11 @@ import com.aldoborrero.tinder.api.entities.SingleResponse
 import com.aldoborrero.tinder.api.entities.Token
 import com.aldoborrero.tinder.api.entities.User
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
+import com.aldoborrero.tinder.api.model.TinderEndpoint
+import com.aldoborrero.tinder.api.model.TinderLog
+import com.aldoborrero.tinder.api.model.TinderLogLevel
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
+import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
 import org.jetbrains.annotations.NotNull
 import retrofit.Endpoint
 import retrofit.Endpoints
@@ -23,8 +27,24 @@ class LoginSpec extends TinderAbstractSpec {
     @Override
     def setupTinderService() {
         interceptor = Spy(TestAuthTokenInterceptor)
-        
-        def tinder = Tinder.create(new Configuration.BaseConfiguration() {
+
+
+        TinderEndpoint endpoint = new TinderEndpoint();
+        endpoint.setUrl("http://localhost:65119");
+        endpoint.setName("Production");
+
+        TinderErrorHandler errorHandler = new TinderErrorHandler();
+
+        // We need to change the naming. I don't like it.
+        def tinderPicasso = Tinder.with()
+                            .setEndpoint(endpoint)
+                            .setAuthTokenInterceptor(interceptor)
+                            .setErrorHandler(errorHandler)
+                            .setLog(TinderLog.NONE)
+                            .setLogLevel(TinderLogLevel.FULL)
+                            .build();
+
+/*        def tinder = Tinder.create(new Configuration.BaseConfiguration() {
             @NotNull
             @Override
             public Endpoint getEndPoint() {
@@ -35,9 +55,9 @@ class LoginSpec extends TinderAbstractSpec {
             AuthTokenInterceptor getAuthTokenInterceptor() {
                 return interceptor
             }
-        })
-        authTinderService = tinder.createAuthTinderService()
-        tinderService = tinder.createSyncService()
+        })*/
+        authTinderService = tinderPicasso.createAuthTinderService()
+        tinderService = tinderPicasso.createSyncService()
     }
 
     def "should login correctly" () {
