@@ -39,8 +39,8 @@ class LoginSpec extends TinderAbstractSpec {
         authTinderService = tinder.createAuthTinderService()
         tinderService = tinder.createSyncService()
     }
-    
-    def "should login correctly"() {
+
+    def "should login correctly and set the auth token in the headers"() {
         setup: "create webserver fake auth response"
         webServer.enqueue(MockResponsesFactory.createAuthResponse())
         
