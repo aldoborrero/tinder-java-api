@@ -39,7 +39,13 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
             @Override
             AuthTokenInterceptor getAuthTokenInterceptor() {
-                return new AuthTokenInterceptor()
+                return new AuthTokenInterceptor() {
+                    @Override
+                    Auth getAuthObject() {
+                        return null
+                    }
+
+                }
             }
         }).createSyncService()
     }

@@ -5,11 +5,10 @@ import com.aldoborrero.tinder.api.base.TinderAbstractSpec
 import com.aldoborrero.tinder.api.entities.Auth
 import com.aldoborrero.tinder.api.entities.AuthData
 import com.aldoborrero.tinder.api.entities.SingleResponse
+import com.aldoborrero.tinder.api.entities.Token
 import com.aldoborrero.tinder.api.entities.User
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
-import com.squareup.okhttp.Interceptor
-import com.squareup.okhttp.Response
 import org.jetbrains.annotations.NotNull
 import retrofit.Endpoint
 import retrofit.Endpoints
@@ -40,8 +39,22 @@ class LoginSpec extends TinderAbstractSpec {
         authTinderService = tinder.createAuthTinderService()
         tinderService = tinder.createSyncService()
     }
-    
-    def "should login correctly"() {
+
+    def "should login correctly" () {
+
+        setup: "Create webserver fake auth response"
+        webServer.enqueue(MockResponsesFactory.createAuthResponse())
+
+        when: "We call to tinder.auth"
+        AuthData authData = new AuthData("123", "es")
+        Auth auth = authTinderService.auth(authData)
+
+        then: "The auth object not must be null and we need to have the toke of user"
+        auth != null
+        !auth.getToken().getId().empty
+    }
+
+    def "should login correctly and set the auth token in the headers"() {
         setup: "create webserver fake auth response"
         webServer.enqueue(MockResponsesFactory.createAuthResponse())
         
@@ -60,12 +73,17 @@ class LoginSpec extends TinderAbstractSpec {
         String authHeader = webServer.takeRequest().getHeader("X-Auth-Token")
         authHeader != null && authHeader.equals("123a")
     }
-    
-    class TestAuthTokenInterceptor extends AuthTokenInterceptor {
 
+    class TestAuthTokenInterceptor extends AuthTokenInterceptor {
         @Override
-        Response intercept(Interceptor.Chain chain) throws IOException {
-            return chain.proceed(chain.request().newBuilder().addHeader("X-Auth-Token", "123a").build())
+        Auth getAuthObject() {
+
+            Auth auth = new Auth();
+            Token token = new Token();
+            token.setId("123a")
+            auth.setToken(token);
+
+            return auth;
         }
         
     }

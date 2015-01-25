@@ -77,7 +77,12 @@ public class SyncTinderServiceTest {
             @NotNull
             @Override
             public AuthTokenInterceptor getAuthTokenInterceptor() {
-                return new AuthTokenInterceptor();
+                return new AuthTokenInterceptor() {
+                    @Override
+                    public Auth getAuthObject() {
+                        return null;
+                    }
+                };
             }
         }).createSyncService();
     }
