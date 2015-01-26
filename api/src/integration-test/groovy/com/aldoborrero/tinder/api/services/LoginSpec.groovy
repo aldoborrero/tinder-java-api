@@ -1,5 +1,5 @@
 package com.aldoborrero.tinder.api.services
-import com.aldoborrero.tinder.api.Configuration
+
 import com.aldoborrero.tinder.api.Tinder
 import com.aldoborrero.tinder.api.base.TinderAbstractSpec
 import com.aldoborrero.tinder.api.entities.Auth
@@ -7,15 +7,14 @@ import com.aldoborrero.tinder.api.entities.AuthData
 import com.aldoborrero.tinder.api.entities.SingleResponse
 import com.aldoborrero.tinder.api.entities.Token
 import com.aldoborrero.tinder.api.entities.User
+import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
 import com.aldoborrero.tinder.api.model.TinderEndpoint
-import com.aldoborrero.tinder.api.model.TinderLog
-import com.aldoborrero.tinder.api.model.TinderLogLevel
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
 import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
-import org.jetbrains.annotations.NotNull
 import retrofit.Endpoint
 import retrofit.Endpoints
+import retrofit.RestAdapter
 
 class LoginSpec extends TinderAbstractSpec {
     
@@ -30,34 +29,34 @@ class LoginSpec extends TinderAbstractSpec {
 
 
         TinderEndpoint endpoint = new TinderEndpoint();
-        endpoint.setUrl("http://localhost:65119");
+        Endpoint finalEndpoint = Endpoints.newFixedEndpoint(webServer.getUrl("/").toString());
+        endpoint.setUrl(finalEndpoint.getUrl());
         endpoint.setName("Production");
 
-        TinderErrorHandler errorHandler = new TinderErrorHandler();
 
-        // We need to change the naming. I don't like it.
-        def tinderPicasso = Tinder.with()
+        TinderErrorHandlerListener errorHandlerListener = new TinderErrorHandlerListener() {
+            @Override
+            void onError(TinderErrorHandler.ERROR typeError) {
+
+                switch (typeError) {
+                    case TinderErrorHandler.ERROR.UNAUTHORIZED:
+                        break;
+                    case TinderErrorHandler.ERROR.UNKNOWN:
+                        break;
+                }
+            }
+        };
+
+        def tinder = Tinder.create()
                             .setEndpoint(endpoint)
                             .setAuthTokenInterceptor(interceptor)
-                            .setErrorHandler(errorHandler)
-                            .setLog(TinderLog.NONE)
-                            .setLogLevel(TinderLogLevel.FULL)
+                            .setErrorHandler(errorHandlerListener)
+                            .setLog(RestAdapter.Log.NONE)
+                            .setLogLevel(RestAdapter.LogLevel.NONE)
                             .build();
 
-/*        def tinder = Tinder.create(new Configuration.BaseConfiguration() {
-            @NotNull
-            @Override
-            public Endpoint getEndPoint() {
-                return Endpoints.newFixedEndpoint(webServer.getUrl("/").toString())
-            }
-
-            @Override
-            AuthTokenInterceptor getAuthTokenInterceptor() {
-                return interceptor
-            }
-        })*/
-        authTinderService = tinderPicasso.createAuthTinderService()
-        tinderService = tinderPicasso.createSyncService()
+        authTinderService = tinder.createAuthTinderService()
+        tinderService = tinder.createSyncService()
     }
 
     def "should login correctly" () {
