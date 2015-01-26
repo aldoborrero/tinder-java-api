@@ -17,6 +17,7 @@
 package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
+import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
 import com.aldoborrero.tinder.api.model.TinderEndpoint;
 import com.aldoborrero.tinder.api.model.TinderLog;
 import com.aldoborrero.tinder.api.model.TinderLogLevel;
@@ -59,7 +60,7 @@ public class Tinder {
         settings = configuration;
     }
 
-    public static Endpoint with () {
+    public static Endpoint create () {
         if (singleton == null) {
             synchronized (TinderBuilder.class) {
                 if (singleton == null) {
@@ -75,7 +76,7 @@ public class Tinder {
 
         private TinderEndpoint endpoint;
         private AuthTokenInterceptor authTokenInterceptor;
-        private TinderErrorHandler errorHandler;
+        private TinderErrorHandlerListener errorHandler;
         private TinderLog log;
         private TinderLogLevel logLevel;
 
@@ -92,7 +93,7 @@ public class Tinder {
         }
 
         @Override
-        public Log setErrorHandler(TinderErrorHandler errorHandler) {
+        public Log setErrorHandler(TinderErrorHandlerListener errorHandler) {
             this.errorHandler = errorHandler;
             return this;
         }
@@ -136,7 +137,7 @@ public class Tinder {
     }
 
     public interface ErrorHandler {
-        public Log setErrorHandler (TinderErrorHandler errorHandler);
+        public Log setErrorHandler (TinderErrorHandlerListener errorHandler);
     }
 
     public interface Log {
