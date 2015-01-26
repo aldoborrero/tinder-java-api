@@ -4,9 +4,11 @@ import retrofit.Endpoint;
 
 public class TinderEndpoint implements Endpoint {
 
+
+    public static final TinderEndpoint PRODUCTION = new TinderEndpoint("https://api.gotinder.com", "Production");
+
     private String url;
     private String name;
-
 
     public TinderEndpoint(String url, String name) {
         this.url = url;
