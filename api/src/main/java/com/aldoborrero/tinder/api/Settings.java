@@ -1,11 +1,10 @@
 package com.aldoborrero.tinder.api;
 
+import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
 import com.aldoborrero.tinder.api.model.TinderEndpoint;
-import com.aldoborrero.tinder.api.model.TinderLog;
-import com.aldoborrero.tinder.api.model.TinderLogLevel;
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
-import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
 import org.jetbrains.annotations.Nullable;
+import retrofit.RestAdapter;
 import retrofit.client.Header;
 
 import java.util.Arrays;
@@ -14,15 +13,15 @@ import java.util.List;
 public class Settings {
 
     private AuthTokenInterceptor authTokenInterceptor;
-    private TinderErrorHandler errorHandler;
+    private TinderErrorHandlerListener errorHandler;
     private TinderEndpoint endpoint;
-    private TinderLogLevel logLevel;
-    private TinderLog log;
+    private RestAdapter.LogLevel logLevel;
+    private RestAdapter.Log log;
 
     public Settings() {
     }
 
-    public Settings(AuthTokenInterceptor authTokenInterceptor, TinderErrorHandler errorHandler, TinderEndpoint endpoint, TinderLogLevel logLevel, TinderLog log) {
+    public Settings(AuthTokenInterceptor authTokenInterceptor, TinderErrorHandlerListener errorHandler, TinderEndpoint endpoint, RestAdapter.LogLevel logLevel, RestAdapter.Log log) {
         this.authTokenInterceptor = authTokenInterceptor;
         this.errorHandler = errorHandler;
         this.endpoint = endpoint;
@@ -38,11 +37,11 @@ public class Settings {
         this.authTokenInterceptor = authTokenInterceptor;
     }
 
-    public TinderErrorHandler getErrorHandler() {
+    public TinderErrorHandlerListener getErrorHandler() {
         return errorHandler;
     }
 
-    public void setErrorHandler(TinderErrorHandler errorHandler) {
+    public void setErrorHandler(TinderErrorHandlerListener errorHandler) {
         this.errorHandler = errorHandler;
     }
 
@@ -54,19 +53,19 @@ public class Settings {
         this.endpoint = endpoint;
     }
 
-    public TinderLogLevel getLogLevel() {
+    public RestAdapter.LogLevel getLogLevel() {
         return logLevel;
     }
 
-    public void setLogLevel(TinderLogLevel logLevel) {
+    public void setLogLevel(RestAdapter.LogLevel logLevel) {
         this.logLevel = logLevel;
     }
 
-    public TinderLog getLog() {
+    public RestAdapter.Log getLog() {
         return log;
     }
 
-    public void setLog(TinderLog log) {
+    public void setLog(RestAdapter.Log log) {
         this.log = log;
     }
 
