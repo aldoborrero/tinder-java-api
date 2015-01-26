@@ -3,6 +3,7 @@ package com.aldoborrero.tinder.api;
 import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
 import com.aldoborrero.tinder.api.model.TinderEndpoint;
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
+import com.aldoborrero.tinder.api.utils.Preconditions;
 import org.jetbrains.annotations.Nullable;
 import retrofit.RestAdapter;
 import retrofit.client.Header;
@@ -89,5 +90,22 @@ public class Settings {
         private Headers() {
             throw new AssertionError("No instances of this class are allowed!");
         }
+    }
+
+    static class Validator {
+
+        public static Settings validate(Settings settings) {
+            Preconditions.checkNotNull(settings, "Settings must not be null!");
+            Preconditions.checkNotNull(settings.getEndpoint(), "Settings Endpoint must not be null!");
+            Preconditions.checkNotNull(settings.getLog(), "Settings Log must not be null!");
+            Preconditions.checkNotNull(settings.getAuthTokenInterceptor(), "Settings AuthTokenInterceptor must not be null!");
+            Preconditions.checkNotNull(settings.getErrorHandler(), "Settings error handle listener must not be null!");
+            return settings;
+        }
+
+        private Validator() {
+            throw new AssertionError("No instances of this class are allowed!");
+        }
+
     }
 }
