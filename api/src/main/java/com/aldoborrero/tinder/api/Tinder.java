@@ -90,7 +90,7 @@ public class Tinder {
         }
 
         @Override
-        public Log setErrorHandler(TinderErrorHandlerListener errorHandler) {
+        public Log setErrorHandlerListener(TinderErrorHandlerListener errorHandler) {
             this.errorHandler = errorHandler;
             return this;
         }
@@ -134,7 +134,7 @@ public class Tinder {
     }
 
     public interface ErrorHandler {
-        public Log setErrorHandler (TinderErrorHandlerListener errorHandler);
+        public Log setErrorHandlerListener (TinderErrorHandlerListener errorHandler);
     }
 
     public interface Log {

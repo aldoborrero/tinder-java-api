@@ -50,7 +50,7 @@ class LoginSpec extends TinderAbstractSpec {
         def tinder = Tinder.create()
                             .setEndpoint(endpoint)
                             .setAuthTokenInterceptor(interceptor)
-                            .setErrorHandler(errorHandlerListener)
+                            .setErrorHandlerListener(errorHandlerListener)
                             .setLog(RestAdapter.Log.NONE)
                             .setLogLevel(RestAdapter.LogLevel.NONE)
                             .build();
