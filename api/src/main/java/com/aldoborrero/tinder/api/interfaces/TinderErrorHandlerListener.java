@@ -7,6 +7,6 @@ import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
  */
 public interface TinderErrorHandlerListener {
 
-    public void onError (TinderErrorHandler.ERROR typeError);
+    void onError (TinderErrorHandler.ERROR typeError);
 
 }

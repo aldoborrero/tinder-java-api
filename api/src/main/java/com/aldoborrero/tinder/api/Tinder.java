@@ -38,20 +38,9 @@ public class Tinder {
 
     private RestAdapter restAdapter;
     private RestAdapter authRestAdapter;
-    private Configuration configuration;
 
-    private static Settings settings;
+    private static Settings settings = null;
     private static TinderBuilder singleton = null;
-
-
-    public static Tinder create(Configuration configuration) {
-        return new Tinder(configuration);
-    }
-
-    protected Tinder(Configuration configuration) {
-        this.configuration = Configuration.Validator.validate(configuration);
-    }
-
 
     protected Tinder (Settings configuration) {
         settings = configuration;
@@ -60,9 +49,7 @@ public class Tinder {
     public static Endpoint create () {
         if (singleton == null) {
             synchronized (TinderBuilder.class) {
-                if (singleton == null) {
-                    singleton = new TinderBuilder();
-                }
+                singleton = new TinderBuilder();
             }
         }
 
@@ -111,7 +98,9 @@ public class Tinder {
         public Tinder build() {
 
             if (settings == null) {
-                settings = new Settings();
+                static {
+                    settings = new Settings();
+                }
             }
 
             settings.setErrorHandler(errorHandler);
@@ -126,27 +115,27 @@ public class Tinder {
 
 
     public interface Endpoint {
-        public AuthInterceptor setEndpoint (TinderEndpoint endpoint);
+        AuthInterceptor setEndpoint (TinderEndpoint endpoint);
     }
 
     public interface AuthInterceptor {
-        public ErrorHandler setAuthTokenInterceptor (AuthTokenInterceptor authTokenInterceptor);
+        ErrorHandler setAuthTokenInterceptor (AuthTokenInterceptor authTokenInterceptor);
     }
 
     public interface ErrorHandler {
-        public Log setErrorHandlerListener (TinderErrorHandlerListener errorHandler);
+        Log setErrorHandlerListener (TinderErrorHandlerListener errorHandler);
     }
 
     public interface Log {
-        public LogLevel setLog (RestAdapter.Log log);
+        LogLevel setLog (RestAdapter.Log log);
     }
 
     public interface LogLevel {
-        public Build setLogLevel (RestAdapter.LogLevel logLevel);
+        Build setLogLevel(RestAdapter.LogLevel logLevel);
     }
 
     public interface Build {
-        public Tinder build ();
+        Tinder build ();
     }
 
     protected RestAdapter getRestAdapter() {
@@ -201,64 +190,6 @@ public class Tinder {
         return authRestAdapter;
     }
 
-/*
-    protected RestAdapter getRestAdapter() {
-        if (restAdapter == null) {
-            restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(configuration.getEndPoint())
-                    .setClient(new OkClient(TinderOkHttpFactory.create(configuration.getAuthTokenInterceptor())))
-                    .setConverter(new GsonConverter(TinderGsonFactory.create()))
-                    .setRequestInterceptor(
-                            new RequestInterceptor() {
-                                @Override
-                                public void intercept(RequestFacade requestFacade) {
-                                    List<Header> headerList = configuration.getExtraHeaders();
-                                    if (headerList != null) {
-                                        for (Header header : headerList) {
-                                            requestFacade.addHeader(header.getName(), header.getValue());
-                                        }
-                                    }
-                                }
-                            }
-                    )
-                    .setErrorHandler(new TinderErrorHandler())
-                    .setLog(configuration.getLog())
-                    .setLogLevel(configuration.getLogLevel())
-                    .build();
-        }
-        return restAdapter;
-    }
-
-    protected RestAdapter getAuthAdapter() {
-        if (authRestAdapter == null) {
-            authRestAdapter = new RestAdapter.Builder()
-                    .setEndpoint(configuration.getEndPoint())
-                    .setClient(new OkClient(TinderOkHttpFactory.create()))
-                    .setConverter(new GsonConverter(TinderGsonFactory.create()))
-                    .setRequestInterceptor(new RequestInterceptor() {
-                        @Override
-                        public void intercept(RequestFacade requestFacade) {
-                            List<Header> headerList = configuration.getExtraHeaders();
-                            if (headerList != null) {
-                                for (Header header : headerList) {
-                                    requestFacade.addHeader(header.getName(), header.getValue());
-                                }
-                            }
-                        }
-                    })
-                    .setErrorHandler(new TinderErrorHandler())
-                    .setLog(new RestAdapter.Log() {
-                        @Override
-                        public void log(String message) {
-                            System.out.println(message);
-                        }
-                    })
-                    .setLogLevel(RestAdapter.LogLevel.FULL)
-                    .build();
-        }
-        return authRestAdapter;
-    }
-*/
 
     public AuthTinderService createAuthTinderService() {
         return getAuthAdapter().create(AuthTinderService.class);
