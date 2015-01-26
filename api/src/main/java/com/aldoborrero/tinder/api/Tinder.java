@@ -19,8 +19,6 @@ package com.aldoborrero.tinder.api;
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
 import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
 import com.aldoborrero.tinder.api.model.TinderEndpoint;
-import com.aldoborrero.tinder.api.model.TinderLog;
-import com.aldoborrero.tinder.api.model.TinderLogLevel;
 import com.aldoborrero.tinder.api.okhttp.TinderOkHttpFactory;
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
 import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
@@ -28,7 +26,6 @@ import com.aldoborrero.tinder.api.services.AsyncTinderService;
 import com.aldoborrero.tinder.api.services.AuthTinderService;
 import com.aldoborrero.tinder.api.services.ObservableTinderService;
 import com.aldoborrero.tinder.api.services.SyncTinderService;
-import org.jetbrains.annotations.NotNull;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.Header;
@@ -77,8 +74,8 @@ public class Tinder {
         private TinderEndpoint endpoint;
         private AuthTokenInterceptor authTokenInterceptor;
         private TinderErrorHandlerListener errorHandler;
-        private TinderLog log;
-        private TinderLogLevel logLevel;
+        private RestAdapter.Log log;
+        private RestAdapter.LogLevel logLevel;
 
         @Override
         public ErrorHandler setAuthTokenInterceptor(AuthTokenInterceptor authTokenInterceptor) {
@@ -99,13 +96,13 @@ public class Tinder {
         }
 
         @Override
-        public LogLevel setLog(TinderLog log) {
+        public LogLevel setLog(RestAdapter.Log log) {
             this.log = log;
             return this;
         }
 
         @Override
-        public Build setLogLevel(TinderLogLevel logLevel) {
+        public Build setLogLevel(RestAdapter.LogLevel logLevel) {
             this.logLevel = logLevel;
             return this;
         }
@@ -141,11 +138,11 @@ public class Tinder {
     }
 
     public interface Log {
-        public LogLevel setLog (TinderLog log);
+        public LogLevel setLog (RestAdapter.Log log);
     }
 
     public interface LogLevel {
-        public Build setLogLevel (TinderLogLevel logLevel);
+        public Build setLogLevel (RestAdapter.LogLevel logLevel);
     }
 
     public interface Build {
@@ -172,15 +169,14 @@ public class Tinder {
                             }
                     )
                     .setErrorHandler(new TinderErrorHandler())
-                    .setLog(TinderLog.parseToRetrofit(settings.getLog()))
-                    .setLogLevel(TinderLogLevel.parseToRetrofit(settings.getLogLevel()))
+                    .setLog(settings.getLog())
+                    .setLogLevel(settings.getLogLevel())
                     .build();
         }
         return restAdapter;
     }
 
     protected RestAdapter getAuthAdapter() {
-
         if (authRestAdapter == null) {
             authRestAdapter = new RestAdapter.Builder()
                     .setEndpoint(settings.getEndpoint())
@@ -198,14 +194,8 @@ public class Tinder {
                         }
                     })
                     .setErrorHandler(new TinderErrorHandler())
-                    .setLog(new RestAdapter.Log() {
-                        @Override
-                        public void log(String message) {
-                            // It's only for debug
-                            System.out.println(message);
-                        }
-                    })
-                    .setLogLevel(TinderLogLevel.parseToRetrofit(settings.getLogLevel()))
+                    .setLog(settings.getLog())
+                    .setLogLevel(settings.getLogLevel())
                     .build();
         }
         return authRestAdapter;
