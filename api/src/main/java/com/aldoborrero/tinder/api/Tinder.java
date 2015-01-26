@@ -120,7 +120,7 @@ public class Tinder {
             settings.setLog(log);
             settings.setLogLevel(logLevel);
 
-            return new Tinder(settings);
+            return new Tinder(Settings.Validator.validate(settings));
         }
     }
 
