@@ -38,6 +38,7 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
     def Gson gson;
     def SyncTinderService tinderService;
+    def AuthTinderService authTinderService;
 
     def setup() {
         setupGson()
@@ -56,30 +57,31 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
         TestAuthTokenInterceptor interceptor = new TestAuthTokenInterceptor();
 
-        tinderService = Tinder.create()
+        Tinder tinder = Tinder.create()
                 .setEndpoint(endpoint)
                 .setAuthTokenInterceptor(interceptor)
                 .setErrorHandlerListener(TinderErrorHandlerListener.NONE)
                 .setLog(RestAdapter.Log.NONE)
                 .setLogLevel(RestAdapter.LogLevel.NONE)
-                .build().createSyncService();
+                .build();
+
+        tinderService = tinder.createSyncService();
+        authTinderService = tinder.createAuthTinderService();
     }
 
-    // TODO: Adapt to use AuthTinderService
-    @Ignore
     def "should parse auth information correctly"() {
-        /*setup: "fake webserver with auth response"
+        setup: "fake webserver with auth response"
         webServer.enqueue(MockResponsesFactory.createAuthResponse())
 
         and: "expected json auth result"
         JsonElement expectedElement = gson.toJsonTree(gson.fromJson(ResourcesLoader.loadAsString(Assertions.AUTH), Auth.class))
 
         when: "we call tinderservice.auth method"
-        Auth auth = tinderService.auth(new AuthData("token", "en"))
+        Auth auth = authTinderService.auth(new AuthData("123", "es"))
 
         then: "we should obtain a properly auth object"
         auth != null
-        expectedElement == gson.toJsonTree(auth)*/
+        expectedElement == gson.toJsonTree(auth)
     }
 
     def "should parse user recommendations correctly"() {
