@@ -184,6 +184,20 @@ class ConversionJsonSpec extends TinderAbstractSpec {
         match.getMatch().getType().equals(Match.Type.MUTUAL)
     }
 
+    def "should parse correctly the like without match response"() {
+        setup:"fake web server with like match"
+        webServer.enqueue(MockResponsesFactory.createLikeWithoutMatchResponse())
+
+        when:"We call to tinderservice.like({id})"
+        LikeResponse match = tinderService.like("whateverid")
+
+        then:"We should have the correct information"
+        match != null
+        match.getMatch() != null
+        !match.isMutual()
+        match.getMatch().getType() == Match.Type.NON_MUTUAL
+    }
+
 
     class TestAuthTokenInterceptor extends AuthTokenInterceptor {
         @Override
