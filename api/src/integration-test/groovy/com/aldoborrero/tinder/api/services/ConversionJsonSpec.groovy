@@ -1,18 +1,20 @@
 package com.aldoborrero.tinder.api.services
-import com.aldoborrero.tinder.api.Configuration
 import com.aldoborrero.tinder.api.Tinder
 import com.aldoborrero.tinder.api.base.TinderAbstractSpec
 import com.aldoborrero.tinder.api.entities.*
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory
+import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener
 import com.aldoborrero.tinder.api.mock.Assertions
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
 import com.aldoborrero.tinder.api.mock.ResourcesLoader
+import com.aldoborrero.tinder.api.model.TinderEndpoint
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
+import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
 import com.google.gson.Gson
 import com.google.gson.JsonElement
-import org.jetbrains.annotations.NotNull
 import retrofit.Endpoint
 import retrofit.Endpoints
+import retrofit.RestAdapter
 import spock.lang.Ignore
 
 class ConversionJsonSpec extends TinderAbstractSpec {
@@ -30,24 +32,33 @@ class ConversionJsonSpec extends TinderAbstractSpec {
     }
 
     def setupTinderService() {
-        tinderService = Tinder.create(new Configuration.BaseConfiguration() {
-            @NotNull
-            @Override
-            public Endpoint getEndPoint() {
-                return Endpoints.newFixedEndpoint(webServer.getUrl("/").toString())
-            }
+        TinderEndpoint endpoint = new TinderEndpoint();
+        Endpoint finalEndpoint = Endpoints.newFixedEndpoint(webServer.getUrl("/").toString());
+        endpoint.setUrl(finalEndpoint.getUrl());
+        endpoint.setName("Production");
 
+        TestAuthTokenInterceptor interceptor = new TestAuthTokenInterceptor();
+
+
+        TinderErrorHandlerListener errorHandlerListener = new TinderErrorHandlerListener() {
             @Override
-            AuthTokenInterceptor getAuthTokenInterceptor() {
-                return new AuthTokenInterceptor() {
-                    @Override
-                    Auth getAuthObject() {
-                        return null
-                    }
+            public void onError(TinderErrorHandler.ERROR typeError) {
+
+                if (typeError == TinderErrorHandler.ERROR.UNAUTHORIZED) {
+                } else {
 
                 }
+
             }
-        }).createSyncService()
+        };
+
+        tinderService = Tinder.create()
+                .setEndpoint(endpoint)
+                .setAuthTokenInterceptor(interceptor)
+                .setErrorHandlerListener(errorHandlerListener)
+                .setLog(RestAdapter.Log.NONE)
+                .setLogLevel(RestAdapter.LogLevel.NONE)
+                .build().createSyncService();
     }
 
     // TODO: Adapt to use AuthTinderService
@@ -128,6 +139,20 @@ class ConversionJsonSpec extends TinderAbstractSpec {
     
     def cleanup() {
         webServer.shutdown()
+    }
+
+    class TestAuthTokenInterceptor extends AuthTokenInterceptor {
+        @Override
+        public Auth getAuthObject() {
+
+            Auth auth = new Auth();
+            Token token = new Token();
+            token.setId("123a");
+            auth.setToken(token);
+
+            return auth;
+        }
+
     }
 
 }

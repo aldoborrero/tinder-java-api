@@ -1,5 +1,5 @@
 package com.aldoborrero.tinder.api.services
-import com.aldoborrero.tinder.api.Configuration
+
 import com.aldoborrero.tinder.api.Tinder
 import com.aldoborrero.tinder.api.base.TinderAbstractSpec
 import com.aldoborrero.tinder.api.entities.Auth
@@ -7,11 +7,14 @@ import com.aldoborrero.tinder.api.entities.AuthData
 import com.aldoborrero.tinder.api.entities.SingleResponse
 import com.aldoborrero.tinder.api.entities.Token
 import com.aldoborrero.tinder.api.entities.User
+import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
+import com.aldoborrero.tinder.api.model.TinderEndpoint
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
-import org.jetbrains.annotations.NotNull
+import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
 import retrofit.Endpoint
 import retrofit.Endpoints
+import retrofit.RestAdapter
 
 class LoginSpec extends TinderAbstractSpec {
     
@@ -23,19 +26,35 @@ class LoginSpec extends TinderAbstractSpec {
     @Override
     def setupTinderService() {
         interceptor = Spy(TestAuthTokenInterceptor)
-        
-        def tinder = Tinder.create(new Configuration.BaseConfiguration() {
-            @NotNull
-            @Override
-            public Endpoint getEndPoint() {
-                return Endpoints.newFixedEndpoint(webServer.getUrl("/").toString())
-            }
 
+
+        TinderEndpoint endpoint = new TinderEndpoint();
+        Endpoint finalEndpoint = Endpoints.newFixedEndpoint(webServer.getUrl("/").toString());
+        endpoint.setUrl(finalEndpoint.getUrl());
+        endpoint.setName("Production");
+
+
+        TinderErrorHandlerListener errorHandlerListener = new TinderErrorHandlerListener() {
             @Override
-            AuthTokenInterceptor getAuthTokenInterceptor() {
-                return interceptor
+            void onError(TinderErrorHandler.ERROR typeError) {
+
+                switch (typeError) {
+                    case TinderErrorHandler.ERROR.UNAUTHORIZED:
+                        break;
+                    case TinderErrorHandler.ERROR.UNKNOWN:
+                        break;
+                }
             }
-        })
+        };
+
+        def tinder = Tinder.create()
+                            .setEndpoint(endpoint)
+                            .setAuthTokenInterceptor(interceptor)
+                            .setErrorHandlerListener(errorHandlerListener)
+                            .setLog(RestAdapter.Log.NONE)
+                            .setLogLevel(RestAdapter.LogLevel.NONE)
+                            .build();
+
         authTinderService = tinder.createAuthTinderService()
         tinderService = tinder.createSyncService()
     }

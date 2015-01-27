@@ -23,6 +23,11 @@ import retrofit.client.Response;
 
 public class TinderErrorHandler implements ErrorHandler {
 
+    public static enum ERROR {
+        UNAUTHORIZED,
+        UNKNOWN
+    };
+
     private static final int UNAUTHORIZED = 401;
 
     @Override
