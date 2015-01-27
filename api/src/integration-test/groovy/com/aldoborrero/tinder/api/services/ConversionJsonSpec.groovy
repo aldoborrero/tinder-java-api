@@ -198,6 +198,17 @@ class ConversionJsonSpec extends TinderAbstractSpec {
         match.getMatch().getType() == Match.Type.NON_MUTUAL
     }
 
+    def "should parse correctly the pass action"() {
+        setup:"fake web server with pass response"
+        webServer.enqueue(MockResponsesFactory.createPassResponse())
+
+        when:"We call to tinderservice.pass({id})"
+        PassResponse passResponse = tinderService.pass("whateverid")
+
+        then:"we should have the correct information"
+        passResponse != null
+        passResponse.getStatus().equals(Response.Status.OK)
+    }
 
     class TestAuthTokenInterceptor extends AuthTokenInterceptor {
         @Override
