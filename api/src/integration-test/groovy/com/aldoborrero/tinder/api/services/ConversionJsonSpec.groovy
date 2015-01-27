@@ -38,6 +38,7 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
     def Gson gson;
     def SyncTinderService tinderService;
+    def AuthTinderService authTinderService;
 
     def setup() {
         setupGson()
@@ -56,30 +57,31 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
         TestAuthTokenInterceptor interceptor = new TestAuthTokenInterceptor();
 
-        tinderService = Tinder.create()
+        Tinder tinder = Tinder.create()
                 .setEndpoint(endpoint)
                 .setAuthTokenInterceptor(interceptor)
                 .setErrorHandlerListener(TinderErrorHandlerListener.NONE)
                 .setLog(RestAdapter.Log.NONE)
                 .setLogLevel(RestAdapter.LogLevel.NONE)
-                .build().createSyncService();
+                .build();
+
+        tinderService = tinder.createSyncService();
+        authTinderService = tinder.createAuthTinderService();
     }
 
-    // TODO: Adapt to use AuthTinderService
-    @Ignore
     def "should parse auth information correctly"() {
-        /*setup: "fake webserver with auth response"
+        setup: "fake webserver with auth response"
         webServer.enqueue(MockResponsesFactory.createAuthResponse())
 
         and: "expected json auth result"
         JsonElement expectedElement = gson.toJsonTree(gson.fromJson(ResourcesLoader.loadAsString(Assertions.AUTH), Auth.class))
 
         when: "we call tinderservice.auth method"
-        Auth auth = tinderService.auth(new AuthData("token", "en"))
+        Auth auth = authTinderService.auth(new AuthData("123", "es"))
 
         then: "we should obtain a properly auth object"
         auth != null
-        expectedElement == gson.toJsonTree(auth)*/
+        expectedElement == gson.toJsonTree(auth)
     }
 
     def "should parse user recommendations correctly"() {
@@ -139,6 +141,73 @@ class ConversionJsonSpec extends TinderAbstractSpec {
         popularResponse.getResults() != null
         popularResponse.status.equals(Response.Status.OK)
 
+    }
+
+    def "should parse correctly updates"() {
+        setup: "fake webserver with updates response"
+        webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
+
+        when: "we call to the tinderService.ping"
+        Updates updates = tinderService.ping(new Update());
+
+        then: "We should a correct information"
+        updates != null
+        updates.getBlocks().size() == 3
+        updates.getMatches().get(0).getMessages().size() == 3
+    }
+
+    def "should parse correctly updates with empty data"() {
+        setup: "fake webserver with updates response"
+        webServer.enqueue(MockResponsesFactory.createEmptyUpdatesResponse());
+
+        when: "we call to the tinderService.ping"
+        Updates updates = tinderService.ping(new Update());
+
+        then: "We should a correct information"
+        updates != null
+        updates.getBlocks().size() == 0
+        updates.getMatches().size() == 0
+        updates.getLastActivityDate() != null
+    }
+
+    def "should parse correctly the like with match response"() {
+        setup:"fake web server with like match"
+        webServer.enqueue(MockResponsesFactory.createLikeWithMatchResponse())
+
+        when:"We call to tinderservice.like({id})"
+        LikeResponse match = tinderService.like("whateverid")
+
+        then:"We should have the correct information"
+        match != null
+        match.getMatch() != null
+        match.isMutual()
+        match.getMatch().getType().equals(Match.Type.MUTUAL)
+    }
+
+    def "should parse correctly the like without match response"() {
+        setup:"fake web server with like match"
+        webServer.enqueue(MockResponsesFactory.createLikeWithoutMatchResponse())
+
+        when:"We call to tinderservice.like({id})"
+        LikeResponse match = tinderService.like("whateverid")
+
+        then:"We should have the correct information"
+        match != null
+        match.getMatch() != null
+        !match.isMutual()
+        match.getMatch().getType() == Match.Type.NON_MUTUAL
+    }
+
+    def "should parse correctly the pass action"() {
+        setup:"fake web server with pass response"
+        webServer.enqueue(MockResponsesFactory.createPassResponse())
+
+        when:"We call to tinderservice.pass({id})"
+        PassResponse passResponse = tinderService.pass("whateverid")
+
+        then:"we should have the correct information"
+        passResponse != null
+        passResponse.getStatus().equals(Response.Status.OK)
     }
 
     class TestAuthTokenInterceptor extends AuthTokenInterceptor {
