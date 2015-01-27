@@ -77,23 +77,10 @@ public class SyncTinderServiceTest {
 
         TestAuthTokenInterceptor interceptor = new TestAuthTokenInterceptor();
 
-
-        TinderErrorHandlerListener errorHandlerListener = new TinderErrorHandlerListener() {
-            @Override
-            public void onError(TinderErrorHandler.ERROR typeError) {
-
-                if (typeError == TinderErrorHandler.ERROR.UNAUTHORIZED) {
-                } else {
-
-                }
-
-            }
-        };
-
         tinderService = Tinder.create()
                 .setEndpoint(endpoint)
                 .setAuthTokenInterceptor(interceptor)
-                .setErrorHandlerListener(errorHandlerListener)
+                .setErrorHandlerListener(TinderErrorHandlerListener.NONE)
                 .setLog(RestAdapter.Log.NONE)
                 .setLogLevel(RestAdapter.LogLevel.NONE)
                 .build().createSyncService();
@@ -110,7 +97,7 @@ public class SyncTinderServiceTest {
 
         JsonElement authElement = gson.toJsonTree(auth);
         JsonElement expectedElement = gson.toJsonTree(expectedAuth);
-        
+
         assertEquals(expectedElement, authElement);*/
     }
 
@@ -119,28 +106,28 @@ public class SyncTinderServiceTest {
         webServer.enqueue(MockResponsesFactory.createUserRecommendationsResponse());
 
         MultipleResponse<User> recommendations = tinderService.getUserRecommendations();
-        
+
         assertNotNull(recommendations);
-        
+
         assertNotNull(recommendations.getResults());
         assertEquals(40, recommendations.getResults().size());
-        
+
         User user = recommendations.getResults().get(0);
         User expectedUser = gson.fromJson(ResourcesLoader.loadAsString(Assertions.FIRST_USER_RECOMMENDATION), User.class);
-        
+
         JsonElement userElement = gson.toJsonTree(user);
         JsonElement expectedElement = gson.toJsonTree(expectedUser);
-        
+
         assertEquals(expectedElement, userElement);
     }
-    
+
     @Test
     public void shouldParseUserInfo() {
         webServer.enqueue(MockResponsesFactory.createUserInfoResponse());
-        
+
         SingleResponse<User> userResponse = tinderService.getUserInfo("whateverid");
         User expectedUser = gson.fromJson(ResourcesLoader.loadAsString(Assertions.USER_INFO), User.class);
-        
+
         assertNotNull(userResponse.getResult());
         assertEquals(MultipleResponse.Status.OK, userResponse.getStatus());
 
@@ -149,7 +136,7 @@ public class SyncTinderServiceTest {
 
         assertEquals(expectedElement, userElement);
     }
-    
+
     @Test
     public void shouldParsePopularLocations() {
         webServer.enqueue(MockResponsesFactory.createPopularLocationsResponse());
@@ -167,7 +154,7 @@ public class SyncTinderServiceTest {
 
         assertEquals(expectedElement, locationElement);
     }
-    
+
     @Test
     public void shouldParseUpdatesCorrectly() {
         // Empty response
@@ -180,7 +167,7 @@ public class SyncTinderServiceTest {
         assertEquals(0, updates.getMatches().size());
         assertEquals(0, updates.getMatches().size());
         assertNotNull(updates.getLastActivityDate());
-        
+
         // Not empty response
         webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
 
@@ -195,41 +182,41 @@ public class SyncTinderServiceTest {
     public void shouldParseLikeAction() {
         // Match!!! Congrats buddy! You're on fire! :D
         webServer.enqueue(MockResponsesFactory.createLikeWithMatchResponse());
-        
+
         LikeResponse match = tinderService.like("whateverid");
-        
+
         assertNotNull(match);
         assertNotNull(match.getMatch());
         assertTrue(match.isMutual());
         assertTrue(match.getMatch().getType().equals(Match.Type.MUTUAL));
-        
+
         // Mot match! You're not on fire buddy! :'(
         webServer.enqueue(MockResponsesFactory.createLikeWithoutMatchResponse());
-        
+
         match = tinderService.like("whateverid");
-        
+
         assertNotNull(match);
         assertNotNull(match.getMatch());
         assertFalse(match.isMutual());
         assertTrue(match.getMatch().getType().equals(Match.Type.NON_MUTUAL));
     }
-    
+
     @Test
     public void shouldParsePassAction() {
         webServer.enqueue(MockResponsesFactory.createPassResponse());
 
         PassResponse passResponse = tinderService.pass("whateverid");
-        
+
         assertNotNull(passResponse);
         assertNotNull(passResponse.getStatus().equals(Response.Status.OK));
     }
-    
+
     @Test
     public void shouldParseLikeMomentAction() {}
-    
+
     @Test
     public void shouldParsePassMomentAction() {}
-    
+
     @Test
     public void shouldParseLogout() {}
 

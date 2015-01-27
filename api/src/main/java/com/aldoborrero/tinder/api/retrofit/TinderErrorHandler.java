@@ -23,7 +23,7 @@ import retrofit.client.Response;
 
 public class TinderErrorHandler implements ErrorHandler {
 
-    public static enum ERROR {
+    public enum ErrorType {
         UNAUTHORIZED,
         UNKNOWN
     };

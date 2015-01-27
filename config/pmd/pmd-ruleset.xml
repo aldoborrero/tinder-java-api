@@ -16,6 +16,7 @@
         <exclude name="AvoidSynchronizedAtMethodLevel" />
         <exclude name="UncommentedEmptyConstructor" />
         <exclude name="UnsynchronizedStaticDateFormatter" />
+        <exclude name="UncommentedEmptyMethod" />
 
         <!-- This check breaks on double checked locking which is safe in Java 6/7 -->
         <exclude name="NonThreadSafeSingleton" />

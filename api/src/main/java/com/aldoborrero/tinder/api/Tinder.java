@@ -39,21 +39,30 @@ public class Tinder {
     private RestAdapter restAdapter;
     private RestAdapter authRestAdapter;
 
-    private static Settings settings = null;
-    private static TinderBuilder singleton = null;
+    private final Settings settings;
 
     protected Tinder (Settings configuration) {
         settings = configuration;
     }
 
-    public static Endpoint create () {
-        if (singleton == null) {
-            synchronized (TinderBuilder.class) {
-                singleton = new TinderBuilder();
-            }
-        }
+    public AuthTinderService createAuthTinderService() {
+      return getAuthAdapter().create(AuthTinderService.class);
+    }
 
-        return singleton;
+    public ObservableTinderService createObservableService() {
+      return getRestAdapter().create(ObservableTinderService.class);
+    }
+
+    public AsyncTinderService createAsyncService() {
+      return getRestAdapter().create(AsyncTinderService.class);
+    }
+
+    public SyncTinderService createSyncService() {
+      return getRestAdapter().create(SyncTinderService.class);
+    }
+
+    public static Endpoint create () {
+      return new TinderBuilder();
     }
 
     private static class TinderBuilder implements Endpoint, AuthInterceptor, ErrorHandler, Log, LogLevel, Build {
@@ -63,6 +72,8 @@ public class Tinder {
         private TinderErrorHandlerListener errorHandler;
         private RestAdapter.Log log;
         private RestAdapter.LogLevel logLevel;
+
+        private Settings settings;
 
         @Override
         public ErrorHandler setAuthTokenInterceptor(AuthTokenInterceptor authTokenInterceptor) {
@@ -96,11 +107,8 @@ public class Tinder {
 
         @Override
         public Tinder build() {
-
             if (settings == null) {
-                static {
-                    settings = new Settings();
-                }
+                settings = new Settings();
             }
 
             settings.setErrorHandler(errorHandler);
@@ -112,7 +120,6 @@ public class Tinder {
             return new Tinder(Settings.Validator.validate(settings));
         }
     }
-
 
     public interface Endpoint {
         AuthInterceptor setEndpoint (TinderEndpoint endpoint);
@@ -188,23 +195,6 @@ public class Tinder {
                     .build();
         }
         return authRestAdapter;
-    }
-
-
-    public AuthTinderService createAuthTinderService() {
-        return getAuthAdapter().create(AuthTinderService.class);
-    }
-    
-    public ObservableTinderService createObservableService() {
-        return getRestAdapter().create(ObservableTinderService.class);
-    }
-
-    public AsyncTinderService createAsyncService() {
-        return getRestAdapter().create(AsyncTinderService.class);
-    }
-
-    public SyncTinderService createSyncService() {
-        return getRestAdapter().create(SyncTinderService.class);
     }
 
 }
