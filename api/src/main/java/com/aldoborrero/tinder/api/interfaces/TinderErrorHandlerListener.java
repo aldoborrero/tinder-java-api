@@ -1,5 +1,6 @@
 /*
 * Copyright 2015 Aldo Borrero <aldo@aldoborrero.com>
+* Copyright 2015 Jose Luis Franconetti <joseluis.franconetti@gmail.com>
 *
 * Licensed under the Apache License, Version 2.0 (the "License");
 * you may not use this file except in compliance with the License.
@@ -14,18 +15,20 @@
 * limitations under the License.
 */
 
-package com.aldoborrero.tinder.api.gson;
+package com.aldoborrero.tinder.api.interfaces;
 
-import java.util.regex.Pattern;
+import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
 
-final class ConverterRegex {
+public interface TinderErrorHandlerListener {
 
-    public static final Pattern INVALID_TOKEN_ERROR = Pattern.compile("No session found for user with api_token:");
+    TinderErrorHandlerListener NONE = new TinderErrorHandlerListener() {
 
-    public static final Pattern USER_ID = Pattern.compile("\"_id\":\\s?\".*\"");
+      @Override
+      public void onError(TinderErrorHandler.ErrorType errorType) {
+      }
 
-    private ConverterRegex() {
-        throw new AssertionError("No instances of this class are allowed!");
-    }
+    };
+
+    void onError (TinderErrorHandler.ErrorType errorType);
 
 }

@@ -16,16 +16,35 @@
 
 package com.aldoborrero.tinder.api.okhttp.interceptors;
 
+import com.aldoborrero.tinder.api.entities.Auth;
 import com.squareup.okhttp.Interceptor;
 import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 
-public class AuthTokenInterceptor implements Interceptor {
+public abstract class AuthTokenInterceptor implements Interceptor {
+
+    private static final String KEY_TOKEN = "X-Auth-Token";
+
+    public AuthTokenInterceptor() {
+        // Empty constructor
+    }
+
+    /**
+     * Abstract method to get token of user.
+     * @return Auth object token
+     */
+    public abstract Auth getAuthObject();
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        return null;
-    }
 
+        if (getAuthObject() != null) {
+            String token = getAuthObject().getToken().getId();
+            return chain.proceed(chain.request().newBuilder().addHeader(KEY_TOKEN, token).build());
+        }
+
+        return chain.proceed(chain.request());
+    }
+    
 }

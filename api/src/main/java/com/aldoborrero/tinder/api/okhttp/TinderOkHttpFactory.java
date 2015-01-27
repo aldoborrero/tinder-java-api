@@ -16,6 +16,7 @@
 
 package com.aldoborrero.tinder.api.okhttp;
 
+import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.concurrent.TimeUnit;
@@ -30,7 +31,12 @@ public final class TinderOkHttpFactory {
         OkHttpClient client = new OkHttpClient();
         client.setConnectTimeout(CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
         client.setReadTimeout(READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS);
-        //client.networkInterceptors().add(new AuthTokenInterceptor());
+        return client;
+    }
+    
+    public static OkHttpClient create(AuthTokenInterceptor interceptor) {
+        OkHttpClient client = create();
+        client.networkInterceptors().add(interceptor);
         return client;
     }
 

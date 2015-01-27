@@ -14,18 +14,16 @@
 * limitations under the License.
 */
 
-package com.aldoborrero.tinder.api.gson;
+package com.aldoborrero.tinder.api.services;
 
-import java.util.regex.Pattern;
+import com.aldoborrero.tinder.api.entities.Auth;
+import com.aldoborrero.tinder.api.entities.AuthData;
+import retrofit.http.Body;
+import retrofit.http.POST;
 
-final class ConverterRegex {
+public interface AuthTinderService {
 
-    public static final Pattern INVALID_TOKEN_ERROR = Pattern.compile("No session found for user with api_token:");
-
-    public static final Pattern USER_ID = Pattern.compile("\"_id\":\\s?\".*\"");
-
-    private ConverterRegex() {
-        throw new AssertionError("No instances of this class are allowed!");
-    }
+    @POST("/auth")
+    Auth auth(@Body AuthData authData);
 
 }

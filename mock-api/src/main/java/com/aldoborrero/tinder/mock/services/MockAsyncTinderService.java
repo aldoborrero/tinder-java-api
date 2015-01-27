@@ -11,7 +11,7 @@ public class MockAsyncTinderService implements AsyncTinderService {
 
     @Override
     public void auth(@Body AuthData authData, Callback<Auth> cb) {
-
+        
     }
 
     @Override
@@ -20,12 +20,12 @@ public class MockAsyncTinderService implements AsyncTinderService {
     }
 
     @Override
-    public void getUserInfo(@Path("id") String id, Callback<User> cb) {
+    public void getUserInfo(@Path("id") String id, Callback<SingleResponse<User>> cb) {
 
     }
 
     @Override
-    public void like(@Path("id") String id, Callback<Like> cb) {
+    public void like(@Path("id") String id, Callback<LikeResponse<Match>> cb) {
 
     }
 
@@ -55,7 +55,7 @@ public class MockAsyncTinderService implements AsyncTinderService {
     }
 
     @Override
-    public void postUpdates(Callback<Updates> cb) {
+    public void ping(@Body Update update, Callback<Updates> cb) {
 
     }
 
@@ -63,4 +63,5 @@ public class MockAsyncTinderService implements AsyncTinderService {
     public void updateUserInformation(Callback<User> cb) {
 
     }
+    
 }
