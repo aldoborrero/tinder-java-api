@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'pmd'
+apply plugin: 'com.bmuschko.nexus'
 apply from: '../gradle/integration-tests.gradle'
 
 cobertura {
@@ -43,4 +44,43 @@ afterEvaluate {
     }
     
     check.dependsOn('pmd')
+}
+
+modifyPom {
+    project {
+        name 'Tinder Java Api'
+        description 'A Java implementation using Retrofit + OkHttp + Gson'
+        url 'https://github.com/aldoborrero/tinder-java-api'
+        
+        artifactId = 'tinder-java-api'
+        version = project.hasProperty('VERSION') ? project.property('VERSION') : ''
+        
+        scm {
+            url 'https://github.com/aldoborrero/tinder-java-api'
+            connection 'scm:https://aldoborrero@github.com/aldoborrero/tinder-java-api.git'
+            developerConnection 'scm:git://github.com/aldoborrero/tinder-java-api.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'aldoborrero'
+                name 'Aldo Borrero'
+                email 'aldo@aldoborrero.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = false
+    javadoc = true
 }
