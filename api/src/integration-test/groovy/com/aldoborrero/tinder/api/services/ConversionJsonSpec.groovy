@@ -145,6 +145,19 @@ class ConversionJsonSpec extends TinderAbstractSpec {
 
     def "should parse correctly updates"() {
         setup: "fake webserver with updates response"
+        webServer.enqueue(MockResponsesFactory.createUpdatesResponse());
+
+        when: "we call to the tinderService.ping"
+        Updates updates = tinderService.ping(new Update());
+
+        then: "We should a correct information"
+        updates != null
+        updates.getBlocks().size() == 3
+        updates.getMatches().get(0).getMessages().size() == 3
+    }
+
+    def "should parse correctly updates with empty data"() {
+        setup: "fake webserver with updates response"
         webServer.enqueue(MockResponsesFactory.createEmptyUpdatesResponse());
 
         when: "we call to the tinderService.ping"
@@ -156,8 +169,6 @@ class ConversionJsonSpec extends TinderAbstractSpec {
         updates.getMatches().size() == 0
         updates.getLastActivityDate() != null
     }
-
-    
 
     class TestAuthTokenInterceptor extends AuthTokenInterceptor {
         @Override
