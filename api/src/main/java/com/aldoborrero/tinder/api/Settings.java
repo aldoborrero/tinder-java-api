@@ -18,8 +18,8 @@
 package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
-import com.aldoborrero.tinder.api.model.TinderEndpoint;
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
+import com.aldoborrero.tinder.api.retrofit.TinderEndpoint;
 import com.aldoborrero.tinder.api.utils.Preconditions;
 import org.jetbrains.annotations.Nullable;
 import retrofit.RestAdapter;

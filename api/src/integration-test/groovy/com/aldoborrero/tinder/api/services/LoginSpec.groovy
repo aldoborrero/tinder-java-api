@@ -19,15 +19,11 @@ package com.aldoborrero.tinder.api.services
 
 import com.aldoborrero.tinder.api.Tinder
 import com.aldoborrero.tinder.api.base.TinderAbstractSpec
-import com.aldoborrero.tinder.api.entities.Auth
-import com.aldoborrero.tinder.api.entities.AuthData
-import com.aldoborrero.tinder.api.entities.SingleResponse
-import com.aldoborrero.tinder.api.entities.Token
-import com.aldoborrero.tinder.api.entities.User
+import com.aldoborrero.tinder.api.entities.*
 import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
-import com.aldoborrero.tinder.api.model.TinderEndpoint
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
+import com.aldoborrero.tinder.api.retrofit.TinderEndpoint
 import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
 import retrofit.Endpoint
 import retrofit.Endpoints

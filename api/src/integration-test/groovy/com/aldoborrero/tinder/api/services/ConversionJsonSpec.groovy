@@ -25,9 +25,8 @@ import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener
 import com.aldoborrero.tinder.api.mock.Assertions
 import com.aldoborrero.tinder.api.mock.MockResponsesFactory
 import com.aldoborrero.tinder.api.mock.ResourcesLoader
-import com.aldoborrero.tinder.api.model.TinderEndpoint
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor
-import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler
+import com.aldoborrero.tinder.api.retrofit.TinderEndpoint
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import retrofit.Endpoint

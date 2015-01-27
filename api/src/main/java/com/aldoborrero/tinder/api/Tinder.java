@@ -18,9 +18,9 @@ package com.aldoborrero.tinder.api;
 
 import com.aldoborrero.tinder.api.gson.TinderGsonFactory;
 import com.aldoborrero.tinder.api.interfaces.TinderErrorHandlerListener;
-import com.aldoborrero.tinder.api.model.TinderEndpoint;
 import com.aldoborrero.tinder.api.okhttp.TinderOkHttpFactory;
 import com.aldoborrero.tinder.api.okhttp.interceptors.AuthTokenInterceptor;
+import com.aldoborrero.tinder.api.retrofit.TinderEndpoint;
 import com.aldoborrero.tinder.api.retrofit.TinderErrorHandler;
 import com.aldoborrero.tinder.api.services.AsyncTinderService;
 import com.aldoborrero.tinder.api.services.AuthTinderService;

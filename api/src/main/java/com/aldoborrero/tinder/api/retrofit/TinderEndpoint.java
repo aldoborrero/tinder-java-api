@@ -15,7 +15,7 @@
 * limitations under the License.
 */
 
-package com.aldoborrero.tinder.api.model;
+package com.aldoborrero.tinder.api.retrofit;
 
 import retrofit.Endpoint;
 
