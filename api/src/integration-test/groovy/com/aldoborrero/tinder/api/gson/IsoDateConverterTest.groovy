@@ -6,7 +6,7 @@ import com.google.gson.JsonPrimitive
 import com.google.gson.JsonSyntaxException
 import spock.lang.Specification
 
-class IsoDateConverterTestGroovy extends Specification {
+class IsoDateConverterTest extends Specification {
 
     def String VALID_ISO_DATE = "2015-01-14T06:18:29.116Z";
     def Date VALID_DATE;
