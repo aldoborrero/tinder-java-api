@@ -1,17 +1,16 @@
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
-        mavenLocal()
     }
     dependencies {
         classpath "net.saliman:gradle-cobertura-plugin:2.2.5"
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.2'
     }
 }
 
 allprojects {
     repositories {
-        mavenCentral()
+        jcenter()
         maven { url "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases" }
         mavenLocal()
     }
@@ -28,6 +27,8 @@ idea {
 }
 
 subprojects {
+    group = 'com.aldoborrero'
+
     idea {
         module {
             testSourceDirs += file('src/integration-test/java')
@@ -44,7 +45,6 @@ cobertura {
     }
 }
 
-apply plugin: 'java'
 apply plugin: 'build-dashboard'
 
 buildDashboard {

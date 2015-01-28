@@ -1,7 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'pmd'
+apply plugin: 'com.bmuschko.nexus'
 apply from: '../gradle/integration-tests.gradle'
+
+project.archivesBaseName = 'tinder-java-api'
+project.version = project.hasProperty('version') ? project.property('version') : ''
 
 cobertura {
     coverageExcludes = ['.*com.aldoborrero.tinder.api.entities.*']
@@ -20,13 +24,13 @@ dependencies {
     testCompile 'com.squareup.okhttp:mockwebserver:2.2.0'
     testCompile 'org.mockito:mockito-all:2.0.2-beta'
     testCompile 'com.google.guava:guava:18.0'
-    
+
     testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
     testCompile 'cglib:cglib-nodep:3.1'
 }
 
 afterEvaluate {
-    
+
     task pmd(type: Pmd) {
 
         description 'Run pmd'
@@ -41,6 +45,49 @@ afterEvaluate {
             html.enabled = true
         }
     }
-    
+
     check.dependsOn('pmd')
+}
+
+modifyPom {
+    project {
+        name 'Tinder Java Api'
+        description 'A Java implementation using Retrofit + OkHttp + Gson'
+        url 'https://github.com/aldoborrero/tinder-java-api'
+
+        artifactId = project.archivesBaseName
+        version = project.version
+
+        scm {
+            url 'https://github.com/aldoborrero/tinder-java-api'
+            connection 'scm:https://aldoborrero@github.com/aldoborrero/tinder-java-api.git'
+            developerConnection 'scm:git://github.com/aldoborrero/tinder-java-api.git'
+        }
+
+        licenses {
+            license {
+                name 'The Apache Software License, Version 2.0'
+                url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'aldoborrero'
+                name 'Aldo Borrero'
+                email 'aldo@aldoborrero.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = false
+    javadoc = false
+}
+
+nexus {
+    sign = !project.hasProperty('local')
 }
