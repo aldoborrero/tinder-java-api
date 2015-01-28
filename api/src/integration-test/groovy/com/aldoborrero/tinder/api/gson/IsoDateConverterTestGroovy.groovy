@@ -3,7 +3,6 @@ package com.aldoborrero.tinder.api.gson
 import com.google.gson.JsonPrimitive
 import spock.lang.Specification
 
-
 class IsoDateConverterTestGroovy extends Specification {
 
     def String VALID_ISO_DATE = "2015-01-14T06:18:29.116Z";
@@ -40,5 +39,17 @@ class IsoDateConverterTestGroovy extends Specification {
         VALID_DATE.compareTo(deserialized) == 0;
     }
 
+    def "should serialize correctly to iso string" () {
+        setup:"Create the string variable to serialized"
+        String deserialized;
+
+        when:"We serialized the date"
+        deserialized = converter.serialize(VALID_DATE, IsoDateConverter.TYPE, null).toString();
+        deserialized = deserialized.substring(1, deserialized.length() - 1);
+
+
+        then:"The comparison should be correct"
+        VALID_ISO_DATE.equals(deserialized)
+    }
 
 }
