@@ -1,6 +1,9 @@
 package com.aldoborrero.tinder.api.gson
 
+import com.google.gson.JsonNull
+import com.google.gson.JsonParseException
 import com.google.gson.JsonPrimitive
+import com.google.gson.JsonSyntaxException
 import spock.lang.Specification
 
 class IsoDateConverterTestGroovy extends Specification {
@@ -50,6 +53,22 @@ class IsoDateConverterTestGroovy extends Specification {
 
         then:"The comparison should be correct"
         VALID_ISO_DATE.equals(deserialized)
+    }
+
+    def "should raise parse exception if date is not primitive" () {
+        when: "We deserialize the date"
+        converter.deserialize(JsonNull.INSTANCE, IsoDateConverter.TYPE, null);
+
+        then: "We get the JsonParseException"
+        thrown JsonParseException
+    }
+
+    def "should raise exception if iso date is invalid" () {
+        when: "We deserialize the date"
+        converter.deserialize(new JsonPrimitive(INVALID_ISO_DATE), IsoDateConverter.TYPE, null);
+
+        then: "We get the JsonSyntaxException"
+        thrown JsonSyntaxException
     }
 
 }
