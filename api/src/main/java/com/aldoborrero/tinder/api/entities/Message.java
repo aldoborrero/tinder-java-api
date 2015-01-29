@@ -32,7 +32,8 @@ public class Message {
     public Message() {
     }
 
-    public Message(String _id, String matchId, String to, String from, String message, Date sentDate, Date createdDate, long timestamp) {
+    public Message(String _id, String matchId, String to, String from, String message, Date sentDate, Date createdDate, 
+                   long timestamp) {
         this._id = _id;
         this.matchId = matchId;
         this.to = to;

@@ -34,7 +34,8 @@ class TokenConverter implements JsonDeserializer<Token>, JsonSerializer<Token> {
     public static final Type TYPE = new TypeToken<Token>(){}.getType();
 
     @Override
-    public Token deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Token deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) 
+            throws JsonParseException {
         if (!(json instanceof JsonPrimitive)) {
             throw new JsonParseException("Token should be a string value!");
         }

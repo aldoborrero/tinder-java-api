@@ -40,9 +40,10 @@ public class MutualMatch implements Match {
     public MutualMatch() {
     }
 
-    public MutualMatch(String _id, String id, boolean closed, int commonFriendCount, int commonLikeCount, Date createdDate,
-                       boolean dead, Date lastActivityDate, int messageCount, List<Message> messages, List<String> participants,
-                       boolean pending, boolean following, boolean followingMoments, User person) {
+    public MutualMatch(String _id, String id, boolean closed, int commonFriendCount, int commonLikeCount, 
+                       Date createdDate, boolean dead, Date lastActivityDate, int messageCount, List<Message> messages, 
+                       List<String> participants, boolean pending, boolean following, boolean followingMoments, 
+                       User person) {
         this._id = _id;
         this.id = id;
         this.closed = closed;

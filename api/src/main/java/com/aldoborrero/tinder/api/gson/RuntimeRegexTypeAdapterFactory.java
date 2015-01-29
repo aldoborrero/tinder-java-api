@@ -128,7 +128,7 @@ import java.util.regex.Pattern;
 class RuntimeRegexTypeAdapterFactory<T> implements TypeAdapterFactory {
 
     private final Class<?> baseType;
-    private final Map<Class<?>, Pattern> subtypeToPattern = new LinkedHashMap<>(); // Yup, not the best objects to form a K,V Map...
+    private final Map<Class<?>, Pattern> subtypeToPattern = new LinkedHashMap<>();
 
     private RuntimeRegexTypeAdapterFactory(Class<?> baseType) {
         if (baseType == null) {
@@ -188,7 +188,8 @@ class RuntimeRegexTypeAdapterFactory<T> implements TypeAdapterFactory {
         private final Map<Pattern, TypeAdapter<?>> patternToDelegate;
         private final Map<Class<?>, TypeAdapter<?>> subtypeToDelegate;
 
-        public DelegateTypeAdapter(Map<Pattern, TypeAdapter<?>> patternToDelegate, Map<Class<?>, TypeAdapter<?>> subtypeToDelegate) {
+        public DelegateTypeAdapter(Map<Pattern, TypeAdapter<?>> patternToDelegate, Map<Class<?>, 
+                TypeAdapter<?>> subtypeToDelegate) {
             this.patternToDelegate = patternToDelegate;
             this.subtypeToDelegate = subtypeToDelegate;
         }
@@ -198,7 +199,8 @@ class RuntimeRegexTypeAdapterFactory<T> implements TypeAdapterFactory {
             @SuppressWarnings("unchecked")
             TypeAdapter<R> delegate = (TypeAdapter<R>) subtypeToDelegate.get(value.getClass());
             if (delegate == null) {
-                throw new JsonParseException("Cannot serialize the object to JSON as there are not a registered delegate.");
+                throw new JsonParseException("Cannot serialize the object to JSON as there are not a registered " +
+                        "delegate.");
             }
             delegate.write(out, value);
         }
