@@ -39,7 +39,8 @@ public class Settings {
     public Settings() {
     }
 
-    public Settings(AuthTokenInterceptor authTokenInterceptor, TinderErrorHandlerListener errorHandler, TinderEndpoint endpoint, RestAdapter.LogLevel logLevel, RestAdapter.Log log) {
+    public Settings(AuthTokenInterceptor authTokenInterceptor, TinderErrorHandlerListener errorHandler, TinderEndpoint 
+            endpoint, RestAdapter.LogLevel logLevel, RestAdapter.Log log) {
         this.authTokenInterceptor = authTokenInterceptor;
         this.errorHandler = errorHandler;
         this.endpoint = endpoint;
@@ -115,7 +116,8 @@ public class Settings {
             Preconditions.checkNotNull(settings, "Settings must not be null!");
             Preconditions.checkNotNull(settings.getEndpoint(), "Settings Endpoint must not be null!");
             Preconditions.checkNotNull(settings.getLog(), "Settings Log must not be null!");
-            Preconditions.checkNotNull(settings.getAuthTokenInterceptor(), "Settings AuthTokenInterceptor must not be null!");
+            Preconditions.checkNotNull(settings.getAuthTokenInterceptor(), 
+                    "Settings AuthTokenInterceptor must not be null!");
             Preconditions.checkNotNull(settings.getErrorHandler(), "Settings error handle listener must not be null!");
             return settings;
         }

@@ -29,6 +29,12 @@ idea {
 subprojects {
     group = 'com.aldoborrero'
 
+    apply plugin: 'checkstyle'
+    
+    checkstyle {
+        configFile = new File('../config/checkstyle/checkstyle.xml')
+    }
+
     idea {
         module {
             testSourceDirs += file('src/integration-test/java')
